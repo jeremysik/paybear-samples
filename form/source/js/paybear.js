@@ -370,20 +370,20 @@
         if (selectedCoin.metamask && typeof web3 !== 'undefined' && web3.eth.accounts.length) {
             console.log('metamask detected');
             var metamaskBtnText = 'Pay with MetaMask';
-            walletBtn.textContent = metamaskBtnText;
+            walletBtn.querySelector('.P-btn-block__text').textContent = metamaskBtnText;
             walletBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 console.log('metamask invoked');
                 var btn = this;
                 btn.setAttribute('disabled', true);
-                btn.textContent = 'Loading';
+                btn.querySelector('.P-btn-block__text').textContent = 'Loading';
                 web3.eth.sendTransaction({
                     from: web3.eth.accounts[0],
                     to: selectedCoin.address,
                     value: web3.toWei(+selectedCoin.coinsValue)
                 }, function(err, data) {
                     btn.removeAttribute('disabled');
-                    btn.textContent = metamaskBtnText;
+                    btn.querySelector('.P-btn-block__text').textContent = metamaskBtnText;
                     if(err) {
                         console.log('metamask error');
                     } else {
