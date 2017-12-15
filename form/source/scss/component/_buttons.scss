@@ -86,14 +86,14 @@
     }
     .P-btn-block__copied-text {
       content: '';
-      font-size: 12px;
+      font-size: 8px;
       color: #4FBDA6;
       letter-spacing: 0.65px;
       font-weight: 700;
       text-transform: uppercase;
       position: absolute;
       z-index: 2;
-      top: -23px;
+      top: -16px;
       padding: 3px 0;
       left: 0;
       width: 100%;
@@ -101,6 +101,11 @@
       align-items: center;
       justify-content: center;
       visibility: hidden;
+      white-space: nowrap;
+      @include md {
+        top: -23px;
+        font-size: 12px;
+      }
       svg {
         margin-right: 3px;
         margin-top: -1px;
@@ -119,13 +124,17 @@
         position: absolute;
         z-index: 1;
         left: -6px;
-        top: -23px;
+        top: -16px;
         width: 100%;
         height: 100%;
         padding: 6px;
-        padding-top: 22px;
+        padding-top: 16px;
         background: rgba(#4FBDA6, 0.19);
         border-radius: 8px;
+        @include md {
+          top: -23px;
+          padding-top: 23px;
+        }
       }
       .P-btn-block__copied-text {
         visibility: visible;
