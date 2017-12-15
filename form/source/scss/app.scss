@@ -1,12 +1,8 @@
-
-//@import "base/normalize";
 @import "base/breakpoints";
 @import "abstract/variables";
-//@import "base/common";
 @import "base/app";
-//@import "base/helpers";
-//@import "base/icons";
 
+@import "component/buttons";
 @import "component/PayBear";
 @import "component/payment";
 @import "component/tabs";

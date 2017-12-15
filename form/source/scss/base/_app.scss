@@ -26,7 +26,7 @@
     border: 0;
   }
   .PayBear-container {
-    padding: 0 25px 28px;
+    padding: 0 20px 20px;
     max-width: 640px;
     min-width: 320px;
     margin: 0 auto;
@@ -37,9 +37,6 @@
     @media (max-width: 639px) {
       border-radius: 0;
     }
-    @include xs {
-      padding: 0 20px 20px;
-    }
     @include md {
       padding: 0 40px 40px;
     }
@@ -48,8 +45,8 @@
     }
     @include sh {
       max-width: 600px;
-      height: 95vh;
-      min-height: 560px;
+      //height: 95vh;
+      //min-height: 560px;
     }
     @include sh2 {
       max-width: 540px;
@@ -99,7 +96,7 @@
     flex-direction: column;
     //overflow-y: scroll;
     @include md {
-      padding: 20px 20px 58px;
+      padding: 20px 20px 40px;
     }
     @include sh {
       padding: 20px 20px 40px;

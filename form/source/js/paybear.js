@@ -356,19 +356,6 @@
         var value = document.querySelector('.Payment__value__coins');
         value.textContent = selectedCoin.coinsValue;
 
-        // copy value btn
-        var copy = document.querySelector('.Payment__value__copy');
-        copy.addEventListener('click', copyValue);
-        value.addEventListener('click', copyValue);
-        function copyValue() {
-            paybearCopyToClipboard(selectedCoin.coinsValue);
-            var tooltip = document.querySelector('.Payment__value__tooltip');
-            tooltip.classList.add('Payment__value__tooltip--visible');
-            tooltip.addEventListener('transitionend', function tooltipTransition() {
-                this.classList.remove('Payment__value__tooltip--visible');
-                this.removeEventListener('transitionend', tooltipTransition, false);
-            });
-        }
 
         // qr code
         var qr = document.querySelector('.Payment__qr img');
@@ -412,24 +399,30 @@
             walletBtn.style.display = 'none';
         }
 
+
+
         paybearResizeFont(selectedCoin.address);
         window.addEventListener('resize', this.resizeListener, true);
 
         // copy address btn
-        document.querySelector('.Payment__address__text').textContent = 'Send ' + selectedCoin.coinsValue + ' ' + selectedCoin.code + ' to this Address';
+        document.querySelector('.Payment__address__text').innerHTML = 'Please send <b>' + selectedCoin.coinsValue + ' ' + selectedCoin.title + '</b> to this Address';
         var copyAddress = document.querySelector('.P-btn-copy-address');
-        var copiedBox = document.querySelector('.Payment__copied__box');
-        copiedBox.removeAttribute('style');
+        copyAddress.querySelector('.P-btn-block__helper').innerHTML = selectedCoin.address.slice(0, 3) +' <span class="P-dots"><i></i></span> ' + selectedCoin.address.slice(-3);
         copyAddress.addEventListener('click', function () {
+            copyAddress.classList.remove('P-btn-block--copied');
+            copy.classList.remove('P-btn-block--copied');
             paybearCopyToClipboard(selectedCoin.address);
-            copiedBox.querySelector('.Payment__address code').textContent = selectedCoin.address;
-            copiedBox.classList.add('Payment__copied__box--visible');
-            copiedBox.querySelector('button').addEventListener('click', function copiedBoxButtonHandler() {
-                copiedBox.classList.remove('Payment__copied__box--visible');
-                this.removeEventListener('click', copiedBoxButtonHandler, false);
-            });
-            copiedBox.querySelectorAll('.Payment__copied__helper__side')[0].querySelector('code').textContent = selectedCoin.address.slice(0, 3);
-            copiedBox.querySelectorAll('.Payment__copied__helper__side')[1].querySelector('code').textContent = selectedCoin.address.slice(-3);
+            copyAddress.classList.add('P-btn-block--copied');
+        });
+
+        // copy value btn
+        var copy = document.querySelector('.Payment__value__copy');
+        copy.querySelector('.P-btn-block__helper').innerHTML = selectedCoin.coinsValue;
+        copy.addEventListener('click', function () {
+            copyAddress.classList.remove('P-btn-block--copied');
+            copy.classList.remove('P-btn-block--copied');
+            paybearCopyToClipboard(selectedCoin.coinsValue);
+            copy.classList.add('P-btn-block--copied');
         });
 
         // tabs
@@ -758,14 +751,9 @@
         var addressLetterWidth = addressContainerWidth / addressLength;
         var currentFontSize = parseInt(window.getComputedStyle(addressCode, null).fontSize);
         var fontSize = Math.ceil(addressLetterWidth * currentFontSize / letterWidth);
-        addressCode.style.fontSize = (fontSize > 52 ? 52 : fontSize) + 'px';
+        addressCode.style.fontSize = (fontSize > 20 ? 20 : fontSize) + 'px';
 
         addressCode.textContent = address;
-
-        var codeElements = document.querySelectorAll('.Payment__address code');
-        for (var i = 0; i < codeElements.length; i++) {
-            codeElements[i].style.fontSize = (fontSize > 52 ? 52 : fontSize) + 'px';
-        }
     }
 
     function beforeCurrenciesSend() {

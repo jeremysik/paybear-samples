@@ -16,18 +16,20 @@
     right: 0;
     bottom: 0;
     background-color: rgba(#000, 0.7);
-    z-index: 99999;
+    z-index: 99;
   }
   &__Content {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
     overflow: auto;
     outline: none;
-    z-index: 99999;
+    z-index: 99;
     pointer-events: none;
+    @media (max-width: 639px) {
+      bottom: 0;
+    }
     > * {
       pointer-events: all;
     }
@@ -96,6 +98,7 @@
   @media (max-width: 639px) {
     position: fixed;
     height: 100vh;
+    width: 100%;
     left: 0;
     top: 0;
   }
