@@ -1,0 +1,36 @@
+{
+  "name": "PayBear",
+  "version": "2.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "client:dev": "webpack-dashboard -t 'form' -- webpack-dev-server",
+    "client:watch": "webpack",
+    "client:build": "npm run clean && NODE_ENV=\"production\" webpack",
+    "client:preview": "npm run clean && NODE_ENV=\"production\" webpack-dev-server",
+    "clean": "rm -rf ./build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^7.1.2",
+    "css-loader": "^0.28.4",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "html-webpack-plugin": "^2.24.1",
+    "node-sass": "^4.5.3",
+    "postcss-loader": "^2.0.6",
+    "postcss-nested": "^2.1.2",
+    "postcss-scss": "^1.0.2",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2",
+    "webpack": "^3.4.1",
+    "webpack-dashboard": "^0.4.0",
+    "webpack-dev-server": "^2.6.1"
+  },
+  "dependencies": {},
+  "description": "Paybear form",
+  "keywords": [
+    "webpack"
+  ],
+  "author": "ilya.aleshev"
+}

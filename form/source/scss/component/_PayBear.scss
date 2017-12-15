@@ -1,0 +1,208 @@
+.PayBear {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  &__Item {
+    background: #fff;
+    padding: 21px 6px 15px;
+    border-radius: 4px;
+    box-shadow: 0 2px 2px rgba(#000, 0.06), 0 2px 24px rgba(#000, 0.06);
+    width: calc((100% - 20px) / 3);
+    text-align: center;
+    color: #686868;
+    font-size: 13px;
+    line-height: 1.35;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    outline: 0;
+    position: relative;
+    transition: all ease 0.1s;
+    user-select: none;
+    @include md {
+      width: calc((100% - 32px) / 3);
+      margin-bottom: 16px;
+      margin-right: 16px;
+      padding: 20px;
+      font-size: 17px;
+    }
+    @include sh {
+      padding: 12px;
+    }
+    &--last {
+      box-shadow: inset 0 0 0 2px #F0F0F0;
+      img {
+        opacity: 0.2;
+        @include md {
+          width: 47px;
+          margin-top: 16px;
+        }
+      }
+    }
+    &:nth-child(3n) {
+      margin-right: 0;
+    }
+    &__icon {
+      width: 52px;
+      height: 52px;
+      margin: 5px auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @include md {
+        width: 54px;
+        height: 54px;
+        margin: 8px auto 0;
+      }
+      img, svg {
+        max-width: 100%;
+        max-height: 100%;
+        width: 100%;
+      }
+    }
+    &__code {
+      font-size: 16px;
+      font-weight: 700;
+      color: #303030;
+      margin-top: 21px;
+      margin-bottom: 3px;
+      @include md {
+        font-size: 18px;
+        margin-top: 22px;
+      }
+      @include sh {
+        margin-top: 12px;
+      }
+    }
+    &__val {
+      font-size: 13px;
+      color: #838383;
+      @include md {
+        font-size: 18px;
+      }
+    }
+    &:not(.PayBear__Item--disabled):active {
+      box-shadow: 0 1px 1px rgba(#000, 0.06);
+      transform: translate3d(0, 1px, 0);
+    }
+    &--disabled {
+      position: relative;
+      cursor: default;
+
+      &:after {
+        content: 'COMING SOON';
+        font-size: 8px;
+        color: #899FB9;
+        font-weight: 600;
+        background: #ECF0F1;
+        border-radius: 4px 4px 0 0;
+        height: 15px;
+        line-height: 15px;
+        white-space: nowrap;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        @include md {
+          font-size: 11px;
+          height: 20px;
+          line-height: 20px;
+        }
+      }
+    }
+  }
+  &__Nav {
+    color: #BDBDBD;
+    font-size: 13px;
+    letter-spacing: 0.22px;
+    padding: 30px 0 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    @include xs {
+      font-size: 10px;
+      padding: 20px 0 18px;
+    }
+    @include md {
+      font-size: 16px;
+      padding: 26px 0 26px;
+    }
+    @include sh {
+      padding: 12px 0;
+    }
+    @include sh2 {
+      font-size: 12px;
+    }
+    > div {
+      display: flex;
+      align-items: center;
+    }
+    &__external {
+      margin: 0 3px -3px 9px;
+      @include md {
+        height: 21px;
+        width: 21px;
+        margin: 0 -2px -5px 12px;
+      }
+    }
+    a {
+      color: $blue;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    &__arrow {
+      width: 22px;
+      height: 22px;
+      margin-right: 16px;
+
+      display: flex;
+      align-items: center;
+      @include md {
+        width: 28px;
+        height: 28px;
+      }
+      @include sh2 {
+        width: 22px;
+        height: 22px;
+      }
+      svg {
+        width: 100%;
+        height: 100%;
+        transform: rotate(180deg);
+        fill: $light-grey;
+      }
+    }
+    &__price {
+      color: #525252;
+      font-size: 11px;
+      letter-spacing: -0.17px;
+      font-weight: 500;
+      @include md {
+        font-size: 15px;
+        letter-spacing: -1px;
+      }
+      @include sh2 {
+        font-size: 11px;
+      }
+      span {
+        font-size: 15px;
+        vertical-align: -1px;
+        letter-spacing: -0.23px;
+        font-weight: 600;
+        @include md {
+          font-size: 30px;
+          vertical-align: -4px;
+        }
+        @include sh2 {
+          font-size: 18px;
+          vertical-align: -2px;
+        }
+      }
+    }
+  }
+  &__Icons {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}

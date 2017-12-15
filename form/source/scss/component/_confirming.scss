@@ -1,0 +1,173 @@
+.Confirming {
+  &__icon {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include sh {
+      svg {
+        height: 100%;
+        max-width: none;
+      }
+    }
+    &--small {
+      .Confirming__pic__point--top {
+        display: none;
+      }
+    }
+    &--full {
+      .Confirming__pic__point--center {
+        display: block;
+      }
+    }
+  }
+  &__pic {
+    .check {
+      display: none;
+    }
+    &__point {
+      &--center {
+        display: none;
+      }
+    }
+    &--1 {
+      .Confirming__pic__point {
+        &:nth-child(1) {
+          .circle {
+            fill: $green;
+          }
+          .time {
+            display: none;
+          }
+          .check {
+            display: block;
+          }
+        }
+      }
+    }
+    &--2 {
+      .Confirming__pic__point {
+        &:nth-child(1) {
+          .circle {
+            fill: $green;
+          }
+          .time {
+            display: none;
+          }
+          .check {
+            display: block;
+          }
+        }
+        &:nth-child(2) {
+          .circle {
+            fill: $green;
+          }
+          .time {
+            display: none;
+          }
+          .check {
+            display: block;
+          }
+        }
+      }
+    }
+    &--3 {
+      .Confirming__pic__point {
+        &:nth-child(1) {
+          .circle {
+            fill: $green;
+          }
+          .time {
+            display: none;
+          }
+          .check {
+            display: block;
+          }
+        }
+        &:nth-child(2) {
+          .circle {
+            fill: $green;
+          }
+          .time {
+            display: none;
+          }
+          .check {
+            display: block;
+          }
+        }
+        &:nth-child(3) {
+          .circle {
+            fill: $green;
+          }
+          .time {
+            display: none;
+          }
+          .check {
+            display: block;
+          }
+        }
+      }
+    }
+    &--4 {
+      .Confirming__pic__point {
+        &:nth-child(1) {
+          .circle {
+            fill: $green;
+          }
+          .time {
+            display: none;
+          }
+          .check {
+            display: block;
+          }
+        }
+        &:nth-child(2) {
+          .circle {
+            fill: $green;
+          }
+          .time {
+            display: none;
+          }
+          .check {
+            display: block;
+          }
+        }
+        &:nth-child(3) {
+          .circle {
+            fill: $green;
+          }
+          .time {
+            display: none;
+          }
+          .check {
+            display: block;
+          }
+        }
+        &:nth-child(4) {
+          .circle {
+            fill: $green;
+          }
+          .time {
+            display: none;
+          }
+          .check {
+            display: block;
+          }
+        }
+      }
+    }
+    &--5 {
+      .Confirming__pic__point {
+        .circle {
+          fill: $green;
+        }
+        .time {
+          display: none;
+        }
+        .check {
+          display: block;
+        }
+      }
+    }
+  }
+}

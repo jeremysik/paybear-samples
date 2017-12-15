@@ -1,0 +1,102 @@
+.PayBearModal {
+  display: none;
+  font-size: 16px;
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+  }
+  &--open {
+    display: block;
+  }
+  &__Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(#000, 0.7);
+    z-index: 99999;
+  }
+  &__Content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    outline: none;
+    z-index: 99999;
+    pointer-events: none;
+    > * {
+      pointer-events: all;
+    }
+  }
+  &__Close {
+    height: 20px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+    svg {
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      vertical-align: middle;
+      fill: $light-grey;
+      transform: rotate(45deg);
+    }
+  }
+  .PayBear-app {
+    @include md {
+      max-height: 98%;
+      display: flex;
+    }
+  }
+  .PayBear-container {
+    pointer-events: all;
+    @media (max-height: 510px) {
+      padding: 0 20px 20px;
+    }
+    @include md {
+      height: auto;
+      width: 100%;
+    }
+  }
+  .PayBear__Nav {
+    @media (max-height: 510px) {
+      padding: 20px 0 18px;
+    }
+  }
+  .Payment__value {
+    @media (max-height: 510px) {
+      padding: 12px 0 24px;
+    }
+  }
+  .P-Tabs__Tab {
+    @media (max-height: 510px) {
+      padding: 8px 15px;
+    }
+  }
+  .P-box__inner {
+    @media (max-height: 510px) {
+      padding: 10px 20px 20px;
+    }
+  }
+  .P-Content h2 {
+    @media (max-width: 400px) {
+      padding: 0;
+    }
+  }
+}
+.PayBearModal__Body--open {
+  overflow: hidden;
+  @media (max-width: 639px) {
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+  }
+}

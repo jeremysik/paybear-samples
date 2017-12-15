@@ -1,0 +1,88 @@
+.P-Tabs {
+  margin-top: 0;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  @include md {
+    margin-top: 14px;
+  }
+  @include sh {
+    margin-top: 20px;
+  }
+  @include sh2 {
+    margin-top: 0;
+  }
+  &__Tab-list {
+    list-style: none;
+    margin: 0 auto 12px;
+    padding: 0;
+    background: #F7F7F7;
+    box-shadow: inset 0 2px 0 rgba(#000, 0.04);
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    position: relative;
+    width: 240px;
+    @include md {
+      margin-bottom: 28px;
+      width: 320px;
+    }
+    @include sh2 {
+      margin-bottom: 20px;
+    }
+    @include sh3 {
+      margin-bottom: 10px;
+    }
+    &:before {
+      content: '';
+      height: 100%;
+      background: #fff;
+      box-shadow: $box-shadow;
+      border-radius: 999px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 33.33%;
+      pointer-events: none;
+      transition: all ease 0.2s;
+    }
+    &--second {
+      &:before {
+        transform: translate3d(100%, 0, 0);
+      }
+    }
+    &--third {
+      &:before {
+        transform: translate3d(200%, 0, 0);
+      }
+    }
+  }
+  &__Tab-panel {
+    display: none;
+    flex-grow: 1;
+    &--selected {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  &__Tab {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 18px;
+    font-weight: 600;
+    color: #696969;
+    width: 50%;
+    text-align: center;
+    padding: 13px 15px;
+    cursor: pointer;
+    @include md {
+      font-size: 21px;
+      padding: 10px;
+    }
+    &--selected {
+      position: relative;
+      color: $primary;
+    }
+  }
+}

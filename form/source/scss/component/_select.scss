@@ -1,0 +1,218 @@
+//
+// Control
+// ------------------------------
+
+
+.Select {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: left;
+
+  // handle disabled state
+  &.is-disabled > .Select-control {
+    background-color: #f9f9f9;
+    &:hover {
+      box-shadow: none;
+    }
+  }
+  &.is-disabled .Select-arrow-zone {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+// base
+
+.Select-control {
+  background-color: #fff;
+  border-radius: 4px;
+  color: #555555;
+  cursor: default;
+  display: table;
+  border-spacing: 0;
+  border-collapse: separate;
+  height: 56px;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  width: 240px;
+  box-shadow: 0 2px 2px rgba(#000, 0.04), 0 3px 11px rgba(#000, 0.04);
+  font-size: 16px;
+  font-weight: 600;
+  .Select-input:focus {
+    outline: none;
+  }
+}
+
+.is-searchable {
+  &.is-open > .Select-control {
+    cursor: text;
+  }
+}
+
+.is-open > .Select-control {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+
+  // flip the arrow so its pointing up when the menu is open
+  .Select-arrow {
+    top: -2px;
+  }
+}
+
+
+// placeholder
+.Select-placeholder,
+.Select--single > .Select-control .Select-value {
+  bottom: 0;
+  left: 0;
+  line-height: 54px;
+  padding-left: 20px;
+  padding-right: 40px;
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  // crop text
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+}
+.Select-value__icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 29px;
+  height: 29px;
+  margin-right: 10px;
+}
+.has-value.Select--single > .Select-control .Select-value,
+.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value {
+  .Select-value-label {
+    color: #5A5A5A;
+  }
+  a.Select-value-label {
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      color: #08c;
+      outline: none;
+      text-decoration: underline;
+    }
+  }
+}
+
+
+// arrow indicator
+
+.Select-arrow-zone {
+  cursor: pointer;
+  display: table-cell;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+  width: 40px;
+}
+
+.Select-arrow {
+  background-image: url('../assets/img/select-arrow.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+}
+.is-open .Select-arrow {
+  transform: rotate(180deg);
+}
+
+
+
+
+// Animation
+// ------------------------------
+
+// fade in
+
+@keyframes Select-animation-fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+//
+// Select Menu
+// ------------------------------
+
+
+// wrapper around the menu
+
+.Select-menu-outer {
+  // Unfortunately, having both border-radius and allows scrolling using overflow defined on the same
+  // element forces the browser to repaint on scroll.  However, if these definitions are split into an
+  // outer and an inner element, the browser is able to optimize the scrolling behavior and does not
+  // have to repaint on scroll.
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  background-color: #fff;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 2px rgba(#000, 0.04), 0 3px 11px rgba(#000, 0.04);
+  box-sizing: border-box;
+  margin-top: -1px;
+  max-height: 200px;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  z-index: 1000;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+// wrapper
+
+.Select-menu {
+  max-height: (200px - 2px);
+  overflow-y: auto;
+}
+
+
+// options
+
+.Select-option {
+  box-sizing: border-box;
+  background-color: #fff;
+  color: #5A5A5A;
+  cursor: pointer;
+  display: block;
+  padding: 10px 20px;
+  font-size: 16px;
+
+  &.is-selected {
+    background-color: #eee;
+  }
+
+  &.is-focused {
+    background-color: #eee;
+  }
+
+  &.is-disabled {
+    color: #ccc;
+    cursor: default;
+  }
+
+}
+
+
+// no results
+
+.Select-noresults {
+  box-sizing: border-box;
+  color: #5A5A5A;
+  cursor: default;
+  display: block;
+  padding: 10px 20px;
+}
