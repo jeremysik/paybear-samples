@@ -80,8 +80,6 @@
     function paybearInit() {
         var that = this;
 
-        loadGoogleFont();
-
         that.root = document.getElementById('paybear');
         that.coinsBlock = document.querySelector('.PayBear__Icons');
         that.paymentBlock = document.querySelector('.Payment');
@@ -315,7 +313,7 @@
         var selectedCoin = state.currencies[state.selected];
         var rate = selectedCoin.rate;
         var code = selectedCoin.code;
-        that.paymentHeaderHelper.innerHTML = 'Rate Locked in At 1 ' + code + ' = ' + options.fiatSign + rate + ' ' + options.fiatCurrency;
+        that.paymentHeaderHelper.innerHTML = 'Rate Locked 1 ' + code + ' : ' + options.fiatSign + rate + ' ' + options.fiatCurrency;
 
         // timer
         if (options.timer) {
@@ -354,15 +352,15 @@
 
         // coin value
         var value = document.querySelector('.Payment__value__coins');
-        value.textContent = selectedCoin.coinsValue;
+        value.textContent = selectedCoin.coinsValue + ' ' + selectedCoin.code;
 
 
         // qr code
         var qr = document.querySelector('.Payment__qr img');
         if (selectedCoin.walletLink) {
-            qr.setAttribute('src', 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' + encodeURIComponent(selectedCoin.walletLink));
+            qr.setAttribute('src', 'https://chart.googleapis.com/chart?chs=180x180&cht=qr&chl=' + encodeURIComponent(selectedCoin.walletLink));
         } else {
-            qr.setAttribute('src', 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' + encodeURIComponent(selectedCoin.address));
+            qr.setAttribute('src', 'https://chart.googleapis.com/chart?chs=180x180&cht=qr&chl=' + encodeURIComponent(selectedCoin.address));
         }
 
         // wallet btn
@@ -405,7 +403,7 @@
         window.addEventListener('resize', this.resizeListener, true);
 
         // copy address btn
-        document.querySelector('.Payment__address__text').innerHTML = 'Please send <b>' + selectedCoin.coinsValue + ' ' + selectedCoin.title + '</b> to this Address';
+        document.querySelector('.Payment__address__text').innerHTML = 'Please send ' + selectedCoin.title + ' to this Address';
         var copyAddress = document.querySelector('.P-btn-copy-address');
         copyAddress.querySelector('.P-btn-block__helper').innerHTML = selectedCoin.address.slice(0, 3) +' <span class="P-dots"><i></i></span> ' + selectedCoin.address.slice(-3);
         copyAddress.addEventListener('click', function () {
@@ -700,24 +698,6 @@
             } finally {
                 document.querySelector('.PayBear-app').removeChild(textarea);
             }
-        }
-    }
-
-    function loadGoogleFont() {
-        if (typeof payBearFontLoaded === 'undefined') {
-            window.payBearFontLoaded = true;
-            WebFontConfig = {
-                google: {
-                    families: ['Overpass:300,400,600,700']
-                }
-            };
-
-            (function(d) {
-                var wf = d.createElement('script'), s = d.scripts[0];
-                wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js';
-                wf.async = true;
-                s.parentNode.insertBefore(wf, s);
-            })(document);
         }
     }
 

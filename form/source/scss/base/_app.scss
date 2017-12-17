@@ -1,5 +1,9 @@
 #paybear {
-  font-family: 'Overpass', Helvetica, Arial, sans-serif;
+  font-family: $font-family-main;
+
+  @media (max-width: 639px) {
+    height: 100%;
+  }
 }
 .PayBear-app {
   font-size: 18px;
@@ -7,10 +11,12 @@
   min-height: 500px;
   margin: 0 auto;
   overflow: hidden;
-  font-family: 'Overpass', Helvetica, Arial, sans-serif;
 
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   -webkit-touch-callout: none;
+  @media (max-width: 639px) {
+    height: 100%;
+  }
   @media (min-width: 640px) {
     height: auto;
   }
@@ -60,7 +66,7 @@
     appearance: none;
     padding: 0;
     outline: 0;
-    font-family: 'Overpass', Helvetica, Arial, sans-serif;
+    font-family: $font-family-main;
     cursor: pointer;
   }
   [role="button"] {

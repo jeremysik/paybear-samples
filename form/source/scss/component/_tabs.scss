@@ -24,6 +24,9 @@
     flex-shrink: 0;
     position: relative;
     width: 240px;
+    @include sm {
+      width: 300px;
+    }
     @include md {
       width: 345px;
     }
@@ -68,7 +71,7 @@
   &__Tab {
     display: inline-block;
     vertical-align: middle;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     color: #696969;
     width: 50%;
@@ -77,11 +80,11 @@
     cursor: pointer;
     line-height: 1.35;
     @include sm {
-      font-size: 16px;
+      font-size: 14px;
     }
     @include md {
-      font-size: 21px;
-      padding: 10px;
+      font-size: 18px;
+      padding: 12px;
     }
     &--selected {
       position: relative;
