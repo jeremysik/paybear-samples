@@ -33,6 +33,11 @@
     > * {
       pointer-events: all;
     }
+    @media (max-height: 500px) {
+      bottom: 0;
+      pointer-events: all;
+      overflow-y: scroll;
+    }
   }
   &__Close {
     height: 20px;
@@ -96,6 +101,13 @@
 .PayBearModal__Body--open {
   overflow: hidden;
   @media (max-width: 639px) {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    left: 0;
+    top: 0;
+  }
+  @media (max-height: 500px) {
     position: fixed;
     height: 100vh;
     width: 100%;
