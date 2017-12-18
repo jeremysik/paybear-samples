@@ -1,4 +1,4 @@
-.PayBear-app {
+#paybear {
   .P-buttons-flex {
     display: flex;
     align-items: center;
@@ -171,6 +171,7 @@
     display: inline-block;
     border-radius: 999px;
     cursor: pointer;
+    border: 0;
     &[disabled] {
       opacity: 0.7;
       pointer-events: none;

@@ -95,6 +95,7 @@
 
         state.html = that.root.innerHTML;
         var appContainer = document.querySelector('.PayBear-app');
+        that.root.removeAttribute('style');
         appContainer.removeAttribute('style');
 
         if (options.enableFiatTotal) {
@@ -121,13 +122,13 @@
                     var xhr = new XMLHttpRequest();
                     beforeCurrenciesSend.call(that);
                     xhr.onload = function () {
-                        if (xhr.responseText) {
+                        if (xhr.status !== 200) {
+                            handleCurrencyError.call(that);
+                        } else {
                             handleCurrenciesSuccess.call(that);
                             var response = JSON.parse(xhr.responseText);
                             Object.assign(state.currencies[state.selected], response);
                             paybearPaymentStart.call(that);
-                        } else {
-                            handleCurrencyError.call(that);
                         }
                     };
                     xhr.open('GET', state.currencies[state.selected].currencyUrl, true);
@@ -154,20 +155,26 @@
         beforeCurrenciesSend.call(that);
         var xhr = new XMLHttpRequest();
         xhr.onload = function () {
-            if (xhr.responseText) {
-                var response = JSON.parse(xhr.responseText);
-                if (Array.isArray(response)) {
-                    handleCurrenciesSuccess();
-                    var currencies = response;
-                    state.currencies  = currencies;
+            if (xhr.status !== 200) {
+                handleCurrenciesError.call(that);
+            } else {
+                try {
+                    var response = JSON.parse(xhr.responseText);
+                    if (Array.isArray(response)) {
+                        handleCurrenciesSuccess();
+                        var currencies = response;
+                        state.currencies  = currencies;
 
-                    if (currencies.length > 1) {
-                        fillCoins.call(that);
+                        if (currencies.length > 1) {
+                            fillCoins.call(that);
+                        } else {
+                            paybearPaymentStart.call(that);
+                        }
+
                     } else {
-                        paybearPaymentStart.call(that);
+                        handleCurrenciesError.call(that);
                     }
-
-                } else {
+                } catch(e) {
                     handleCurrenciesError.call(that);
                 }
             }
@@ -200,19 +207,26 @@
                     var xhr = new XMLHttpRequest();
                     beforeCurrencySend.call(that);
                     xhr.onload = function () {
-                        if (xhr.responseText) {
-                            handleCurrencySuccess.call(that);
-                            var response = JSON.parse(xhr.responseText);
-                            Object.assign(that.state.currencies[index], response);
-
-                            that.state.selected = index;
-                            paybearPaymentStart.call(that);
-                        } else {
+                        if (xhr.status !== 200) {
                             handleCurrencyError.call(that);
+                        } else {
+                          try {
+                              handleCurrencySuccess.call(that);
+                              var response = JSON.parse(xhr.responseText);
+                              Object.assign(that.state.currencies[index], response);
+
+                              that.state.selected = index;
+                              paybearPaymentStart.call(that);
+                          } catch(e) {
+                              handleCurrencyError.call(that);
+                          }
                         }
                     };
                     xhr.open('GET', item.currencyUrl, true);
                     xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.onerror = function () {
+                        handleCurrencyError.call(that);
+                    };
                     xhr.send();
                 } else {
                     that.state.selected = index;
@@ -224,7 +238,7 @@
                 '<img src="' + item.icon + '" alt="' + item.title + '"></div>\n' +
                 '<div class="PayBear__Item__code">' + item.code + '</div>\n' +
                 '<div class="PayBear__Item__name">' + item.title + '</div>\n' +
-                '<div class="PayBear__Item__val">' + item.coinsValue + '</div>';
+                '<div class="PayBear__Item__val">' + (item.coinsValue ? item.coinsValue : '') + '</div>';
 
             coinsContainer.appendChild(coin);
         });
@@ -457,7 +471,7 @@
         state.checkStatusInterval = setInterval(function () {
             var xhr = new XMLHttpRequest();
             xhr.onload = function () {
-                if (xhr.responseText) {
+                if (xhr.status === 200) {
                     var response = JSON.parse(xhr.responseText);
 
                     if (response.confirmations !== undefined) {
@@ -758,10 +772,7 @@
         }
 
         if (that.options.modal) {
-            document.querySelector('.PayBearModal__Overlay').addEventListener('click', function errorClose() {
-                hideModal.call(that);
-                this.removeEventListener('click', errorClose, false);
-            }, false);
+            handleModalOverlay.call(that);
         }
     }
 
@@ -799,10 +810,7 @@
         }
 
         if (that.options.modal) {
-            document.querySelector('.PayBearModal__Overlay').addEventListener('click', function errorClose() {
-                hideModal.call(that);
-                this.removeEventListener('click', errorClose, false);
-            }, false);
+            handleModalOverlay.call(that);
         }
     }
 
@@ -868,6 +876,19 @@
             that.modal.classList.remove(openedModalClass);
             document.body.classList.remove(openedModalBodyClass);
         }
+    }
+
+    function handleModalOverlay() {
+        var that = this;
+        var overlay = document.querySelector('.PayBearModal__Overlay');
+        var newOverlay = overlay.cloneNode(true);
+
+        overlay.parentNode.replaceChild(newOverlay, overlay);
+
+        newOverlay.addEventListener('click', function errorClose() {
+            hideModal.call(that);
+            this.removeEventListener('click', errorClose, false);
+        }, false);
     }
 
 }());
