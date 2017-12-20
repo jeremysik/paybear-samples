@@ -33,26 +33,30 @@
             this.options = extendDefaults(defaults, arguments[0]);
         }
 
-        var requiredOptions = [
-            'fiatValue',
-        ];
-
-        var options = this.options;
-        for (var i = 0; i < requiredOptions.length; i++) {
-            var option = requiredOptions[i];
-            if (typeof options[option] === 'undefined') {
-                throw new Error(
-                    option + ' is undefined'
-                );
-            }
-        }
-
         var that = this;
         this.resizeListener = function () {
             paybearResizeFont(that.state.currencies[that.state.selected]['address']);
         };
 
-        paybearInit.call(this);
+        if (typeof that.options.button !== 'undefined') {
+            var button = document.querySelector(that.options.button);
+
+            if (!button) {
+                throw new Error(
+                    'Can\'t find ' + that.options.button
+                );
+            }
+
+            var newButton = button.cloneNode(true);
+            button.parentNode.replaceChild(newButton, button);
+
+            newButton.addEventListener('click', function () {
+                paybearInit.call(that);
+            })
+        } else {
+            paybearInit.call(that);
+        }
+
     };
 
     Paybear.prototype.destroy = function () {
@@ -63,9 +67,9 @@
         appContainer.style.display = 'none';
 
         if (state.html) {
-            if (that.options.modal) {
+            if (that.options.modal && that.modal.parentNode) {
                 document.body.appendChild(that.root);
-                that.modal.remove();
+                that.modal.parentNode.removeChild(that.modal);
             }
             that.root.innerHTML = state.html;
         }
@@ -76,38 +80,67 @@
         clearInterval(state.checkStatusInterval);
     };
 
-
     function paybearInit() {
         var that = this;
+        var options = that.options;
 
         that.root = document.getElementById('paybear');
+        that.root.removeAttribute('style');
+
+        that.state.html = that.root.innerHTML;
+
+        if (options.settingsUrl) {
+            if (options.modal) {
+                initModal.call(that);
+            }
+
+            var xhr = new XMLHttpRequest();
+            beforeCurrenciesSend.call(that);
+            xhr.onload = function () {
+                if (xhr.status !== 200) {
+                    handleCurrenciesError.call(that);
+                } else {
+                    handleCurrenciesSuccess.call(that);
+                    var response = JSON.parse(xhr.responseText);
+                    Object.assign(options, response);
+                    app.call(that);
+                }
+            };
+            xhr.open('GET', options.settingsUrl, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send();
+        } else {
+            app.call(that);
+        }
+    }
+
+    function app() {
+        var that = this;
         that.coinsBlock = document.querySelector('.PayBear__Icons');
-        that.paymentBlock = document.querySelector('.Payment');
-        that.paymentHeader = document.querySelector('.Payment__header');
-        that.paymentHeaderTimer = document.querySelector('.Payment__header__timer');
-        that.paymentHeaderTitle = document.querySelector('.Payment__header__title');
-        that.paymentHeaderHelper = document.querySelector('.Payment__header__helper');
+        that.paymentBlock = document.querySelector('.P-Payment');
+        that.paymentHeader = document.querySelector('.P-Payment__header');
+        that.paymentHeaderTimer = document.querySelector('.P-Payment__header__timer');
+        that.paymentHeaderTitle = document.querySelector('.P-Payment__header__title');
+        that.paymentHeaderHelper = document.querySelector('.P-Payment__header__helper');
         that.topBackButton = document.querySelector('.PayBear__Nav__arrow');
 
-        var options = that.options;
         var state = that.state;
+        var options = that.options;
         that.defaultTimer = options.timer;
 
-        state.html = that.root.innerHTML;
         var appContainer = document.querySelector('.PayBear-app');
-        that.root.removeAttribute('style');
         appContainer.removeAttribute('style');
 
-        if (options.enableFiatTotal) {
+        if (options.modal && !options.settingsUrl) {
+            initModal.call(that);
+        }
+
+        if (options.enableFiatTotal && options.fiatValue) {
             document.querySelector('.PayBear__Nav__price').removeAttribute('style');
             document.querySelector('.PayBear__Nav__price').innerHTML = options.fiatSign + '<span>' + options.fiatValue.toFixed(2) + '</span>' + options.fiatCurrency;
         }
         if (options.enablePoweredBy) {
             document.querySelector('.PayBear__brand-link').removeAttribute('style');
-        }
-
-        if (options.modal) {
-            initModal.call(that);
         }
 
         if (typeof options.currencies === 'string') {
@@ -144,7 +177,6 @@
                 'Currencies is undefined'
             );
         }
-
     }
 
     function fetchCurrencies() {
@@ -200,7 +232,7 @@
             var coin = document.createElement('div');
             coin.setAttribute('role', 'button');
             coin.setAttribute('tabindex', 0);
-            coin.classList = classNames.join(' ');
+            coin.className = classNames.join(' ');
             coin.onclick = function (e) {
                 e.preventDefault();
                 if (item.currencyUrl) {
@@ -210,16 +242,16 @@
                         if (xhr.status !== 200) {
                             handleCurrencyError.call(that);
                         } else {
-                          try {
-                              handleCurrencySuccess.call(that);
-                              var response = JSON.parse(xhr.responseText);
-                              Object.assign(that.state.currencies[index], response);
+                            try {
+                                handleCurrencySuccess.call(that);
+                                var response = JSON.parse(xhr.responseText);
+                                Object.assign(that.state.currencies[index], response);
 
-                              that.state.selected = index;
-                              paybearPaymentStart.call(that);
-                          } catch(e) {
-                              handleCurrencyError.call(that);
-                          }
+                                that.state.selected = index;
+                                paybearPaymentStart.call(that);
+                            } catch(e) {
+                                handleCurrencyError.call(that);
+                            }
                         }
                     };
                     xhr.open('GET', item.currencyUrl, true);
@@ -283,7 +315,7 @@
         options.timer = that.defaultTimer;
         state.isConfirming = false;
 
-        that.paymentHeader.classList = 'Payment__header';
+        that.paymentHeader.className = 'P-Payment__header';
         that.paymentHeaderTitle.textContent = 'Waiting on Payment';
         that.paymentHeaderHelper.removeAttribute('style');
     }
@@ -335,14 +367,14 @@
             state.interval = setInterval(function() {
                 var timer = options.timer - 1;
                 if (timer < 1) {
-                    that.paymentHeader.classList.add('Payment__header--red');
+                    that.paymentHeader.classList.add('P-Payment__header--red');
                     that.paymentHeaderTitle.textContent = 'Payment Window Expired';
                     that.paymentHeaderHelper.style.display = 'none';
 
                     paybearPaymentExpired.call(that);
 
                 } else if (timer < 60) {
-                    that.paymentHeader.classList.add('Payment__header--red');
+                    that.paymentHeader.classList.add('P-Payment__header--red');
                     that.paymentHeaderTitle.textContent = 'Window Expiring Soon';
                     that.paymentHeaderHelper.style.display = 'none';
                 }
@@ -360,17 +392,17 @@
 
 
         // coin icon
-        var icon = document.querySelector('.Payment__value__icon img');
+        var icon = document.querySelector('.P-Payment__value__icon img');
         icon.setAttribute('src', selectedCoin.icon);
         icon.setAttribute('alt', selectedCoin.title);
 
         // coin value
-        var value = document.querySelector('.Payment__value__coins');
+        var value = document.querySelector('.P-Payment__value__coins');
         value.textContent = selectedCoin.coinsValue + ' ' + selectedCoin.code;
 
 
         // qr code
-        var qr = document.querySelector('.Payment__qr img');
+        var qr = document.querySelector('.P-Payment__qr img');
         if (selectedCoin.walletLink) {
             qr.setAttribute('src', 'https://chart.googleapis.com/chart?chs=180x180&cht=qr&chl=' + encodeURIComponent(selectedCoin.walletLink));
         } else {
@@ -412,12 +444,11 @@
         }
 
 
-
         paybearResizeFont(selectedCoin.address);
         window.addEventListener('resize', this.resizeListener, true);
 
         // copy address btn
-        document.querySelector('.Payment__address__text').innerHTML = 'Please send ' + selectedCoin.title + ' to this Address';
+        document.querySelector('.P-Payment__address__text').innerHTML = 'Please send ' + selectedCoin.title + ' to this Address';
         var copyAddress = document.querySelector('.P-btn-copy-address');
         copyAddress.querySelector('.P-btn-block__helper').innerHTML = selectedCoin.address.slice(0, 3) +' <span class="P-dots"><i></i></span> ' + selectedCoin.address.slice(-3);
         copyAddress.addEventListener('click', function () {
@@ -428,7 +459,7 @@
         });
 
         // copy value btn
-        var copy = document.querySelector('.Payment__value__copy');
+        var copy = document.querySelector('.P-Payment__value__copy');
         copy.querySelector('.P-btn-block__helper').innerHTML = selectedCoin.coinsValue;
         copy.addEventListener('click', function () {
             copyAddress.classList.remove('P-btn-block--copied');
@@ -440,32 +471,38 @@
         // tabs
         var tabs = document.querySelectorAll('.P-Tabs__Tab');
         var tabPanels = document.querySelectorAll('.P-Tabs__Tab-panel');
+        var tabsClassNames = {
+            list: 'P-Tabs__Tab-list',
+            listSecond: 'P-Tabs__Tab-list',
+            selectedTab: 'P-Tabs__Tab--selected',
+            selectedPanel: 'P-Tabs__Tab-panel--selected',
+        };
         tabs[0].addEventListener('click', function (e) {
-            this.parentNode.classList = 'P-Tabs__Tab-list';
-            tabs[1].classList.remove('P-Tabs__Tab--selected');
-            tabs[2].classList.remove('P-Tabs__Tab--selected');
-            this.classList.add('P-Tabs__Tab--selected');
-            tabPanels[1].classList.remove('P-Tabs__Tab-panel--selected');
-            tabPanels[2].classList.remove('P-Tabs__Tab-panel--selected');
-            tabPanels[0].classList.add('P-Tabs__Tab-panel--selected');
+            this.parentNode.className = 'P-Tabs__Tab-list';
+            tabs[1].classList.remove(tabsClassNames.selectedTab);
+            tabs[2].classList.remove(tabsClassNames.selectedTab);
+            this.classList.add(tabsClassNames.selectedTab);
+            tabPanels[1].classList.remove(tabsClassNames.selectedPanel);
+            tabPanels[2].classList.remove(tabsClassNames.selectedPanel);
+            tabPanels[0].classList.add(tabsClassNames.selectedPanel);
         });
         tabs[1].addEventListener('click', function (e) {
-            this.parentNode.classList = 'P-Tabs__Tab-list P-Tabs__Tab-list--second';
-            tabs[0].classList.remove('P-Tabs__Tab--selected');
-            tabs[2].classList.remove('P-Tabs__Tab--selected');
-            this.classList.add('P-Tabs__Tab--selected');
-            tabPanels[0].classList.remove('P-Tabs__Tab-panel--selected');
-            tabPanels[2].classList.remove('P-Tabs__Tab-panel--selected');
-            tabPanels[1].classList.add('P-Tabs__Tab-panel--selected');
+            this.parentNode.className = 'P-Tabs__Tab-list P-Tabs__Tab-list--second';
+            tabs[0].classList.remove(tabsClassNames.selectedTab);
+            tabs[2].classList.remove(tabsClassNames.selectedTab);
+            this.classList.add(tabsClassNames.selectedTab);
+            tabPanels[0].classList.remove(tabsClassNames.selectedPanel);
+            tabPanels[2].classList.remove(tabsClassNames.selectedPanel);
+            tabPanels[1].classList.add(tabsClassNames.selectedPanel);
         });
         tabs[2].addEventListener('click', function (e) {
-            this.parentNode.classList = ('P-Tabs__Tab-list P-Tabs__Tab-list--third');
-            tabs[0].classList.remove('P-Tabs__Tab--selected');
-            tabs[1].classList.remove('P-Tabs__Tab--selected');
-            this.classList.add('P-Tabs__Tab--selected');
-            tabPanels[0].classList.remove('P-Tabs__Tab-panel--selected');
-            tabPanels[1].classList.remove('P-Tabs__Tab-panel--selected');
-            tabPanels[2].classList.add('P-Tabs__Tab-panel--selected');
+            this.parentNode.className = ('P-Tabs__Tab-list P-Tabs__Tab-list--third');
+            tabs[0].classList.remove(tabsClassNames.selectedTab);
+            tabs[1].classList.remove(tabsClassNames.selectedTab);
+            this.classList.add(tabsClassNames.selectedTab);
+            tabPanels[0].classList.remove(tabsClassNames.selectedPanel);
+            tabPanels[1].classList.remove(tabsClassNames.selectedPanel);
+            tabPanels[2].classList.add(tabsClassNames.selectedPanel);
         });
 
         state.checkStatusInterval = setInterval(function () {
@@ -496,15 +533,15 @@
         var state = that.state;
         clearInterval(state.interval);
         clearInterval(state.checkStatusInterval);
-        var paymentExpired = document.querySelector('.Payment__expired');
-        var paymentStart = document.querySelector('.Payment__start');
+        var paymentExpired = document.querySelector('.P-Payment__expired');
+        var paymentStart = document.querySelector('.P-Payment__start');
         paymentStart.style.display = 'none';
         paymentExpired.removeAttribute('style');
 
         // helper
-        var showPaymentHelper = paymentExpired.querySelector('.Payment__helper');
-        var paymentHelper = document.querySelector('.Payment__expired-helper');
-        var paymentHelperBtn = document.querySelector('.Payment__expired-helper button');
+        var showPaymentHelper = paymentExpired.querySelector('.P-Payment__helper');
+        var paymentHelper = document.querySelector('.P-Payment__expired-helper');
+        var paymentHelperBtn = document.querySelector('.P-Payment__expired-helper button');
         showPaymentHelper.addEventListener('click', function () {
             paymentExpired.style.display = 'none';
             paymentHelper.removeAttribute('style');
@@ -532,7 +569,7 @@
         var selectedCoin = state.currencies[state.selected];
 
         if (!isConfirming) {
-            that.paymentHeader.classList.remove('Payment__header--red');
+            that.paymentHeader.classList.remove('P-Payment__header--red');
             window.removeEventListener('resize', that.resizeListener, true);
             clearInterval(state.interval);
 
@@ -544,15 +581,15 @@
                 that.paymentHeaderTimer.textContent = formatTimer(timer);
             }, 1000);
 
-            var paymentStart = document.querySelector('.Payment__start');
-            var paymentConfirming = document.querySelector('.Payment__confirming');
+            var paymentStart = document.querySelector('.P-Payment__start');
+            var paymentConfirming = document.querySelector('.P-Payment__confirming');
             paymentStart.style.display = 'none';
             paymentConfirming.removeAttribute('style');
 
             // helper
-            var showPaymentHelper = paymentConfirming.querySelector('.Payment__helper');
-            var paymentHelper = document.querySelector('.Payment__confirming-helper');
-            var paymentHelperBtn = document.querySelector('.Payment__confirming-helper button');
+            var showPaymentHelper = paymentConfirming.querySelector('.P-Payment__helper');
+            var paymentHelper = document.querySelector('.P-Payment__confirming-helper');
+            var paymentHelperBtn = document.querySelector('.P-Payment__confirming-helper button');
             showPaymentHelper.addEventListener('click', function () {
                 var blockExplorer = state.currencies[state.selected].blockExplorer;
                 paymentConfirming.style.display = 'none';
@@ -603,21 +640,21 @@
         clearInterval(state.interval);
         clearInterval(state.checkStatusInterval);
 
-        var paymentConfirming = document.querySelector('.Payment__confirming');
-        var paymentConfirmed = document.querySelector('.Payment__confirmed');
+        var paymentConfirming = document.querySelector('.P-Payment__confirming');
+        var paymentConfirmed = document.querySelector('.P-Payment__confirmed');
         paymentConfirming.style.display = 'none';
         paymentConfirmed.removeAttribute('style');
 
         //header
-        that.paymentHeader.classList.remove('Payment__header--red');
-        that.paymentHeader.classList.add('Payment__header--green');
+        that.paymentHeader.classList.remove('P-Payment__header--red');
+        that.paymentHeader.classList.add('P-Payment__header--green');
         that.paymentHeaderTitle.textContent = 'Payment Confimed';
         that.paymentHeaderHelper.textContent = selectedCoin.confirmations + (selectedCoin.confirmations === 1 ? ' Confirmation' : ' Confirmations') + ' found';
         that.paymentHeaderTimer.style.display = 'none';
-        document.querySelector('.Payment__header__check').style.display = 'block';
+        document.querySelector('.P-Payment__header__check').style.display = 'block';
 
         if (options.redirectTo && options.redirectTimeout) {
-            paymentConfirmed.querySelector('p').textContent = 'Redirecting you back in ' + options.redirectTimeout / 1000 + ' seconds.';
+            paymentConfirmed.querySelector('p').textContent = 'Redirecting you back in ' + options.redirectTimeout + ' seconds.';
             paymentConfirmed.querySelector('.P-btn').setAttribute('href', options.redirectTo);
             if (options.enableBack) {
                 that.topBackButton.removeEventListener('click', that.handleTopBackButton);
@@ -647,7 +684,7 @@
                 if (redirect.indexOf(window.location.href) > -1) {
                     window.location.reload();
                 }
-            }, options.redirectTimeout);
+            }, options.redirectTimeout * 1000);
         }
 
     }
@@ -676,41 +713,32 @@
             return clipboardData.setData('Text', text);
         } else if (document.queryCommandSupported && document.queryCommandSupported('copy')) {
             var textarea = document.createElement('textarea');
-            textarea.textContent = text;
-            textarea.style.position = 'fixed';  // Prevent scrolling to bottom of page in MS Edge.
-            textarea.style.fontSize = '62px';
+
+            // Prevent zooming on iOS
+            textarea.style.fontSize = '12pt';
+            // Reset box model
+            textarea.style.border = '0';
+            textarea.style.padding = '0';
+            textarea.style.margin = '0';
+            // Move element out of screen horizontally
+            textarea.style.position = 'absolute';
+            textarea.style.left = '-9999px';
+            // Move element to the same position vertically
+            var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+            textarea.style.top = yPosition + 'px';
+
+            textarea.setAttribute('readonly', '');
+            textarea.value = text;
+
             document.querySelector('.PayBear-app').appendChild(textarea);
 
-            if (navigator.userAgent.match(/ipad|iphone/i)) {
-
-                var editable = textarea.contentEditable;
-                var readOnly = textarea.readOnly;
-
-                textarea.contentEditable = true;
-                textarea.readOnly = false;
-
-                var range = document.createRange();
-                range.selectNodeContents(textarea);
-
-                var selection = window.getSelection();
-                selection.removeAllRanges();
-                selection.addRange(range);
-
-                textarea.setSelectionRange(0, 999999);
-                textarea.contentEditable = editable;
-                textarea.readOnly = readOnly;
-
-            } else {
-                textarea.select();
-            }
+            selectByElement(textarea);
 
             try {
                 return document.execCommand('copy');  // Security exception may be thrown by some browsers.
             } catch (ex) {
                 console.warn('Copy to clipboard failed.', ex);
                 return false;
-            } finally {
-                document.querySelector('.PayBear-app').removeChild(textarea);
             }
         }
     }
@@ -730,9 +758,51 @@
         }
     }
 
+    function selectByElement(element) {
+        var selectedText;
+
+        if (element.nodeName === 'SELECT') {
+            element.focus();
+
+            selectedText = element.value;
+        }
+        else if (element.nodeName === 'INPUT' || element.nodeName === 'TEXTAREA') {
+            var isReadOnly = element.hasAttribute('readonly');
+
+            if (!isReadOnly) {
+                element.setAttribute('readonly', '');
+            }
+
+            element.select();
+            element.setSelectionRange(0, element.value.length);
+
+            if (!isReadOnly) {
+                element.removeAttribute('readonly');
+            }
+
+            selectedText = element.value;
+        }
+        else {
+            if (element.hasAttribute('contenteditable')) {
+                element.focus();
+            }
+
+            var selection = window.getSelection();
+            var range = document.createRange();
+
+            range.selectNodeContents(element);
+            selection.removeAllRanges();
+            selection.addRange(range);
+
+            selectedText = selection.toString();
+        }
+
+        return selectedText;
+    }
+
     function paybearResizeFont(address) {
-        var addressContainerWidth = document.querySelector('.Payment__address').clientWidth;
-        var addressCode = document.querySelector('.Payment__address code');
+        var addressContainerWidth = document.querySelector('.P-Payment__address').clientWidth;
+        var addressCode = document.querySelector('.P-Payment__address code');
         // detecting computed letter width + offset
         addressCode.innerHTML = '<span>A</span>';
         var addressCodeSpan = addressCode.querySelector('span');
@@ -823,11 +893,11 @@
     function initModal() {
         var that = this;
         var modal = document.createElement('div');
-        modal.classList = 'PayBearModal';
+        modal.className = 'PayBearModal';
         var overlay = document.createElement('div');
-        overlay.classList = 'PayBearModal__Overlay';
+        overlay.className = 'PayBearModal__Overlay';
         var modalContent = document.createElement('div');
-        modalContent.classList = 'PayBearModal__Content';
+        modalContent.className = 'PayBearModal__Content';
         modalContent.appendChild(that.root);
         modal.appendChild(overlay);
         modal.appendChild(modalContent);

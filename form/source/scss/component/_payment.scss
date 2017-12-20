@@ -1,4 +1,4 @@
-.Payment {
+.P-Payment {
   text-align: center;
   flex-grow: 1;
   &__header {
@@ -85,10 +85,10 @@
     &--red {
       background: rgba(#B93D3D, 0.1);
       color: #968e8e;
-      .Payment__header__timer {
+      .P-Payment__header__timer {
         background: #B93D3D;
       }
-      .Payment__header__title {
+      .P-Payment__header__title {
         color: #B93D3D;
       }
     }
@@ -96,10 +96,10 @@
     &--green {
       background: rgba($green, 0.1);
       color: #8e9594;
-      .Payment__header__timer {
+      .P-Payment__header__timer {
         background: $green;
       }
-      .Payment__header__title {
+      .P-Payment__header__title {
         color: $green;
       }
     }
@@ -129,10 +129,10 @@
     flex-direction: column;
     flex-grow: 1;
     @include sh {
-      .Payment .P-btn {
+      .P-Payment .P-btn {
         margin-top: 20px;
       }
-      .Payment__helper {
+      .P-Payment__helper {
         margin-top: 20px;
       }
     }
@@ -169,25 +169,22 @@
       padding-top: 12px;
     }
     &__icon {
-      width: 45px;
       height: 45px;
       line-height: 45px;
       text-align: center;
-      margin-right: 5px;
+      margin-right: 18px;
 
       display: flex;
       align-items: center;
       justify-content: center;
       @include md {
-        width: 64px;
         height: 64px;
         line-height: 64px;
-        margin-right: 5px;
       }
       img {
-        max-width: 100%;
+        height: 100%;
         max-height: 100%;
-        width: 100%;
+        max-width: 100%;
       }
     }
   }
@@ -226,16 +223,22 @@
   }
   &__address {
     color: #8C8C8C;
-    font-size: 14px;
+    font-size: 11px;
     padding: 25px 0;
     position: relative;
     z-index: 2;
+    @include xs {
+      font-size: 10px;
+    }
+    @media (min-width: 420px) {
+      font-size: 13px;
+    }
     @include sm {
-      font-size: 18px;
+      font-size: 16px;
     }
     @include md {
       padding: 32px 0 44px;
-      font-size: 21px;
+      font-size: 20px;
     }
     b {
       color: #6A6A6A;
@@ -244,13 +247,22 @@
     code {
       display: block;
       color: #000000;
-      font-size: 14px;
+      font-size: 10.5px;
       font-weight: 700;
       padding: 0;
       margin: 0;
       background: none;
       font-family: $font-family-code;
       margin-top: 12px;
+      @include xs {
+        font-size: 9.5px;
+      }
+      @media (min-width: 420px) {
+        font-size: 13px;
+      }
+      @include sm {
+        font-size: 16px;
+      }
       @include md {
         letter-spacing: -0.54px;
         font-size: 20px;
@@ -265,7 +277,7 @@
     margin-top: 20px;
     letter-spacing: 1.23px;
     @include xs {
-      font-size: 9px;
+      font-size: 10px;
     }
     @include md {
       font-size: 15px;
