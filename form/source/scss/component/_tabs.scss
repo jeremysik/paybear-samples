@@ -49,6 +49,11 @@
       pointer-events: none;
       transition: all ease 0.2s;
     }
+    &--no-wallet {
+      &:before {
+        width: 50%;
+      }
+    }
     &--second {
       &:before {
         transform: translate3d(100%, 0, 0);

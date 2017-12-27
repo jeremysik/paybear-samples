@@ -471,41 +471,7 @@
         });
 
         // tabs
-        var tabs = document.querySelectorAll('.P-Tabs__Tab');
-        var tabPanels = document.querySelectorAll('.P-Tabs__Tab-panel');
-        var tabsClassNames = {
-            list: 'P-Tabs__Tab-list',
-            listSecond: 'P-Tabs__Tab-list',
-            selectedTab: 'P-Tabs__Tab--selected',
-            selectedPanel: 'P-Tabs__Tab-panel--selected',
-        };
-        tabs[0].addEventListener('click', function (e) {
-            this.parentNode.className = 'P-Tabs__Tab-list';
-            tabs[1].classList.remove(tabsClassNames.selectedTab);
-            tabs[2].classList.remove(tabsClassNames.selectedTab);
-            this.classList.add(tabsClassNames.selectedTab);
-            tabPanels[1].classList.remove(tabsClassNames.selectedPanel);
-            tabPanels[2].classList.remove(tabsClassNames.selectedPanel);
-            tabPanels[0].classList.add(tabsClassNames.selectedPanel);
-        });
-        tabs[1].addEventListener('click', function (e) {
-            this.parentNode.className = 'P-Tabs__Tab-list P-Tabs__Tab-list--second';
-            tabs[0].classList.remove(tabsClassNames.selectedTab);
-            tabs[2].classList.remove(tabsClassNames.selectedTab);
-            this.classList.add(tabsClassNames.selectedTab);
-            tabPanels[0].classList.remove(tabsClassNames.selectedPanel);
-            tabPanels[2].classList.remove(tabsClassNames.selectedPanel);
-            tabPanels[1].classList.add(tabsClassNames.selectedPanel);
-        });
-        tabs[2].addEventListener('click', function (e) {
-            this.parentNode.className = ('P-Tabs__Tab-list P-Tabs__Tab-list--third');
-            tabs[0].classList.remove(tabsClassNames.selectedTab);
-            tabs[1].classList.remove(tabsClassNames.selectedTab);
-            this.classList.add(tabsClassNames.selectedTab);
-            tabPanels[0].classList.remove(tabsClassNames.selectedPanel);
-            tabPanels[1].classList.remove(tabsClassNames.selectedPanel);
-            tabPanels[2].classList.add(tabsClassNames.selectedPanel);
-        });
+        paybearTabs.call(that);
 
         state.checkStatusInterval = setInterval(function () {
             var xhr = new XMLHttpRequest();
@@ -513,7 +479,7 @@
                 if (xhr.status === 200) {
                     var response = JSON.parse(xhr.responseText);
 
-                    if (response.confirmations !== undefined) {
+                    if (response.confirmations) {
                         paybearPaymentConfirming.call(that, response.confirmations);
                     }
 
@@ -742,6 +708,61 @@
                 console.warn('Copy to clipboard failed.', ex);
                 return false;
             }
+        }
+    }
+
+    function paybearTabs() {
+        var state = this.state;
+        var selectedCoin = state.currencies[state.selected];
+        var tabsClassNames = {
+            list: 'P-Tabs__Tab-list',
+            listSecond: 'P-Tabs__Tab-list--second',
+            listThird: 'P-Tabs__Tab-list--third',
+            listNoWallet: 'P-Tabs__Tab-list--no-wallet',
+            tab: 'P-Tabs__Tab',
+            tabWallet: 'P-Tabs__Tab--wallet',
+            panel: 'P-Tabs__Tab-panel',
+            panelWallet: 'P-Tabs__Tab-panel--wallet',
+            selectedTab: 'P-Tabs__Tab--selected',
+            selectedPanel: 'P-Tabs__Tab-panel--selected',
+        };
+        var tabs = document.querySelectorAll('.' + tabsClassNames.tab);
+        var tabPanels = document.querySelectorAll('.' + tabsClassNames.panel);
+
+        if (!selectedCoin.walletLink) {
+            document.querySelector('.' + tabsClassNames.list).classList.remove(tabsClassNames.listSecond);
+            document.querySelector('.' + tabsClassNames.list).classList.add(tabsClassNames.listNoWallet);
+            document.querySelector('.' + tabsClassNames.tabWallet).style.display = 'none';
+            document.querySelector('.' + tabsClassNames.panelWallet).style.display = 'none';
+            tabs = document.querySelectorAll('.' + tabsClassNames.tab + ':not(.' + tabsClassNames.tabWallet + ')');
+            tabPanels = document.querySelectorAll('.' + tabsClassNames.panel + ':not(.' + tabsClassNames.panelWallet + ')');
+        }
+
+        for (var i = 0; i < tabs.length; ++i) {
+            (function(index){
+                tabs[i].onclick = function() {
+                    var tabListClassNames = [tabsClassNames.list];
+                    if (!selectedCoin.walletLink) {
+                        tabListClassNames.push(tabsClassNames.listNoWallet);
+                    }
+                    if (index === 1) {
+                        tabListClassNames.push(tabsClassNames.listSecond)
+                    } else if (index === 2) {
+                        tabListClassNames.push(tabsClassNames.listThird)
+                    }
+                    this.parentNode.className = tabListClassNames.join(' ');
+
+                    for (var k = 0; k < tabs.length; ++k) {
+                        tabs[k].className = tabsClassNames.tab;
+                    }
+                    this.classList.add(tabsClassNames.selectedTab);
+
+                    for (var l = 0; l < tabPanels.length; ++l) {
+                        tabPanels[l].classList.remove(tabsClassNames.selectedPanel);
+                    }
+                    tabPanels[index].classList.add(tabsClassNames.selectedPanel);
+                }
+            })(i);
         }
     }
 
