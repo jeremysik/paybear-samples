@@ -1,7 +1,7 @@
 #paybear {
   font-family: $font-family-main;
 
-  @media (max-width: 639px) {
+  @media (max-width: 640px) {
     height: 100%;
   }
 }
@@ -14,10 +14,10 @@
 
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   -webkit-touch-callout: none;
-  @media (max-width: 639px) {
+  @media (max-width: 640px) {
     height: 100%;
   }
-  @media (min-width: 640px) {
+  @media (min-width: 641px) {
     height: auto;
   }
   *,
@@ -26,7 +26,8 @@
     box-sizing: border-box;
   }
   a {
-    color: inherit;
+    color: #527EE0;
+    font-weight: 600;
     text-decoration: none;
     box-shadow: none;
     border: 0;
@@ -37,10 +38,11 @@
     min-width: 320px;
     margin: 0 auto;
     height: 100%;
+    min-height: 500px;
     background: #fff;
     position: relative;
     border-radius: 0 0 6px 6px;
-    @media (max-width: 639px) {
+    @media (max-width: 640px) {
       border-radius: 0;
     }
     @include md {
@@ -131,7 +133,7 @@
     flex-grow: 1;
   }
   strong {
-    font-weight: 500;
+    font-weight: 600;
     color: #818181;
   }
   h2 {
