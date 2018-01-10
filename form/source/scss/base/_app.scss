@@ -119,30 +119,14 @@
     }
   }
 }
-.P-Info {
+
+.P-Content {
   font-size: 17px;
   letter-spacing: 0.22px;
   line-height: 1.58;
   color: #747474;
   @include md {
-    padding: 0 80px;
-  }
-  b {
-    color: #353535;
-  }
-}
-
-.P-Content {
-  color: #A4A4A4;
-  font-size: 14px;
-  line-height: 1.4;
-  letter-spacing: 0.46px;
-
-  @include md {
-    font-size: 15px;
-  }
-  @include xl {
-    font-size: 20px;
+    padding: 0 55px;
   }
   @include sh {
     display: flex;
@@ -150,30 +134,23 @@
     flex-grow: 1;
   }
   strong {
-    font-weight: 600;
-    color: #818181;
+    font-weight: 500;
+    color: #353535;
   }
   h2 {
     color: #161616;
-    font-size: 28px;
-    letter-spacing: 0.5px;
+    font-size: 24px;
+    letter-spacing: 0.3px;
     font-weight: 700;
-    margin: 14px 0 24px;
-    line-height: 1.16;
+    margin: 20px 0 23px;
+    line-height: 1.33;
     padding: 0 22px;
     @include xs {
       padding: 0;
-      margin: 10px 0 14px;
-      font-size: 24px;
     }
-    @include md {
-      font-size: 30px;
-      margin: 20px 0;
-    }
-    @include sh {
-      font-size: 26px;
-      margin: 12px 0;
-    }
+  }
+  p {
+    margin: 0;
   }
   &__icon {
     width: 170px;

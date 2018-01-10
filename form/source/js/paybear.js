@@ -545,35 +545,12 @@
             paymentStart.style.display = 'none';
             paymentConfirming.removeAttribute('style');
 
-            // helper
-            var showPaymentHelper = paymentConfirming.querySelector('.P-Payment__helper');
-            var paymentHelper = document.querySelector('.P-Payment__confirming-helper');
-            var paymentHelperBtn = document.querySelector('.P-Payment__confirming-helper button');
-            showPaymentHelper.addEventListener('click', function () {
-                var blockExplorer = state.currencies[state.selected].blockExplorer;
-                paymentConfirming.style.display = 'none';
-                paymentHelper.removeAttribute('style');
-                if (paymentHelper.clientHeight > document.querySelector('.P-box__inner').clientHeight) {
-                    paymentHelper.style.overflowY = 'scroll';
-                }
-                if (blockExplorer) {
-                    paymentHelper.querySelector('.block-explorer-li').style.display = 'block';
-                    paymentHelper.querySelector('.P-block-explorer').setAttribute('href', blockExplorer);
-                }
-            });
-            paymentHelperBtn.addEventListener('click', function () {
-                paymentConfirming.removeAttribute('style');
-                paymentHelper.style.display = 'none';
-            });
-
             //header
             that.paymentHeaderTitle.textContent = 'Confirming Payment';
 
             document.querySelector('.P-confirmations')
-                .innerHTML = 'Your payment will be finalized' +
-                ' after <strong class="P-confirmations">' + selectedCoin.confirmations +'</strong> ' +
-                (selectedCoin.confirmations === 1 ? 'confirmation' : 'confirmations') +
-                ' on the network.';
+                .innerHTML = 'Payment Detected. Waiting for ' + selectedCoin.confirmations +
+                (selectedCoin.confirmations === 1 ? ' Confirmation' : ' Confirmations');
 
             if (options.modal || options.onBackClick) {
                 paymentConfirming.querySelector('.P-btn').addEventListener('click', function (e) {

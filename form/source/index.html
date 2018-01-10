@@ -117,9 +117,9 @@
                         </div>
                         <!-- Payment expired step -->
                         <div class="P-Payment__expired" style="display: none;">
-                            <div class="P-Info">
+                            <div class="P-Content">
                                 <p>
-                                    <b>Your payment window has expired.</b>
+                                    <strong>Your payment window has expired.</strong>
                                     Hit the Refresh button bellow to lock in
                                     a new exchange rate and start again.
                                 </p>
@@ -268,18 +268,18 @@
                                         </g>
                                     </svg>
                                 </div>
-                                <h2>Payment Detected</h2>
-                                <p class="P-confirmations">
-                                    ---
+                                <h2 class="P-confirmations">---</h2>
+                                <p>
+                                    <strong>Your order will be processed soon.</strong>
+                                    You can leave this tab open until your payment is confirmed,
+                                    <strong>or</strong> close it and wait for a confirmation email.
                                 </p>
-                                <p>You can freely close this window now!</p>
                                 <div>
-                                    <button class="P-btn">
-                                        <i class="P-btn__icon P-btn__icon--back"></i>
-                                        Back to Cart
+                                    <button class="P-btn P-btn--sm">
+                                        <i class="P-btn__icon--close"></i>
+                                        Close
                                     </button>
                                 </div>
-                                <button class="P-Payment__helper">What does this mean?</button>
                             </div>
                         </div>
                         <!-- Payment confirming step: Help screen -->
