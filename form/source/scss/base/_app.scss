@@ -42,6 +42,11 @@
     background: #fff;
     position: relative;
     border-radius: 0 0 6px 6px;
+    display: flex;
+    flex-direction: column;
+    .PayBear {
+      flex-grow: 1;
+    }
     @media (max-width: 640px) {
       border-radius: 0;
     }
@@ -112,6 +117,18 @@
     @include sh3 {
       padding-bottom: 20px;
     }
+  }
+}
+.P-Info {
+  font-size: 17px;
+  letter-spacing: 0.22px;
+  line-height: 1.58;
+  color: #747474;
+  @include md {
+    padding: 0 80px;
+  }
+  b {
+    color: #353535;
   }
 }
 
