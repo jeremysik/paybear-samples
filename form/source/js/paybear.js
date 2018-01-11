@@ -368,7 +368,8 @@
                 if (timer < 1) {
                     that.paymentHeader.classList.add('P-Payment__header--red');
                     that.paymentHeaderTitle.textContent = 'Payment Window Expired';
-                    that.paymentHeaderHelper.style.display = 'none';
+                    that.paymentHeaderHelper.textContent = 'Rate Expired';
+                    that.paymentHeaderHelper.removeAttribute('style');
 
                     paybearPaymentExpired.call(that);
 

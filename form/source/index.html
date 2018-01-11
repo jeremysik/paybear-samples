@@ -282,45 +282,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Payment confirming step: Help screen -->
-                        <div class="P-Payment__confirming-helper" style="display: none;">
-                            <div class="P-Content">
-                                <div class="P-Content__icon">
-                                    <img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI4MCIgdmlld0JveD0iMCAwIDI1NCAyODAiIHdpZHRoPSIyNTQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJub256ZXJvIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMi42ODc1IC0yKSI+PHBhdGggZD0ibTI0Mi4xNzUyNyA4NC44MTg4NDIxIDE0LjA5Mjg3Ny0xNC4wOTIzNzg5LTQyLjI3ODEzMy00Mi4yNzgxMzM0LTE0LjA5MjM3OSAxNC4wOTI4NzcyIDcuMDQ2MTkgNy4wNDYxODk1LTE1LjM0MzQ3NCAxNS4zNDM0NzM3Yy0xNC4zOTM4MTgtMTAuMjQ3OTE1OC0zMS4xMzQzNzItMTcuMzM3NDUyNy00OS4yODE5NzItMjAuMzg5MjA3di0yMS43MjI1MTIzaDkuOTY0OTEydi0xOS45Mjk4MjQ1OGgtNTkuNzg5NDczNXYxOS45Mjk4MjQ1OGg5Ljk2NDkxMjV2MjEuNzIzMDEwNWMtNTYuNTMzOTM3IDkuNTA1NTI5OC05OS42NDkxMjI5OCA1OC41NDk4Mzg2LTk5LjY0OTEyMjk4IDExNy43ODU3NjE2IDAgNjYuMDQxOTU4IDUzLjUzNjk4OTQ4IDExOS41Nzg5NDcgMTE5LjU3ODk0Njk4IDExOS41Nzg5NDcgNjYuMDQxOTU4IDAgMTE5LjU3ODk0OC01My41MzY5ODkgMTE5LjU3ODk0OC0xMTkuNTc4OTQ3IDAtMjUuODIxMDgxLTguMjY2ODkxLTQ5LjY2NjYxOC0yMi4xODE4OTUtNjkuMjExNzk2N2wxNS4zNDM0NzQtMTUuMzQzNDczN3oiIGZpbGw9IiNjZGQ3ZGUiLz48cGF0aCBkPSJtMTIyLjM4ODU1NCA0Mi43NDg5NzU0YzYuODA2MDM1IDAgMTMuNDM0Njk1LjcwMDUzMzQgMTkuOTI5ODI1IDEuNzkzMTg2di0yMS42MTI0LS4xMTA2MTA1aC0zOS44NTk2NDl2NC45ODI0NTYxaDE5LjkyOTgyNHoiIGZpbGw9IiNiOGM1Y2YiLz48cGF0aCBkPSJtMjA2Ljk0MzgyNSA3Ny43NzI2NTI2YzQuNzE4Mzg2IDQuNzE4Mzg2IDguOTYxNDQ1IDkuODkzMTY0OSAxMi44NDE3ODIgMTUuMzQzNDczN2wxNS4yNjQ3NTEtMTUuMjY0NzUwOS4wNzgyMjQtLjA3ODIyNDUtMjguMTg1MjU2LTI4LjE4NTI1NjItMy41MjM1OTMgMy41MjM1OTMgMTQuMDkyODc4IDE0LjA5MjM3OXoiIGZpbGw9IiNiOGM1Y2YiLz48cGF0aCBkPSJtMTIyLjEzMzk1MSAyNDIuMDQ3MjIxYy00My45NTcyMjEyIDAtNzkuNzE5Mjk4NC0zNS43NjIwNzctNzkuNzE5Mjk4NC03OS43MTkyOThzMzUuNzYyMDc3Mi03OS43MTkyOTg0IDc5LjcxOTI5ODQtNzkuNzE5Mjk4NGM0My45NTcyMjEgMCA3OS43MTkyOTggMzUuNzYyMDc3NCA3OS43MTkyOTggNzkuNzE5Mjk4NHMtMzUuNzYyMDc3IDc5LjcxOTI5OC03OS43MTkyOTggNzkuNzE5Mjk4eiIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Im0xOTEuODYzNDI1IDE2Mi4zMzgzODZjLS4wMTE5NTgtMzguMzYxNDI1LTMxLjIyNTA1My02OS41ODg5Njg1LTY5LjU4ODk2OS02OS41ODg5Njg1djY5LjU2NzU0MzV6IiBmaWxsPSIjZDVlMmYyIi8+PHBhdGggZD0ibTEyMi4yMDQyMDQgMTQ0LjIwMDI1M2MtOS44OTg2NDYgMC0xNy45MzY4NDMgOC4wMzgxOTYtMTcuOTM2ODQzIDE3LjkzNjg0MiAwIDkuOTIxMDY2IDguMDM4MTk3IDE3LjkzNjg0MiAxNy45MzY4NDMgMTcuOTM2ODQyIDEuNjIzMjg0IDAgMy4xOTA3NjQtLjIxNDI0NiA0LjY2NzU2NC0uNjA4ODU2bDU1LjExODQyMS0xNC4yMzg4NjNjMy4xOTA3NjUtLjgyMzEwMiAzLjE5MDc2NS01LjM1NTE0NCAwLTYuMTc4MjQ2bC01NS4xMTg0MjEtMTQuMjE2NDQyYy0xLjQ4ODI1OS0uNDA2MDctMy4wNDQyOC0uNjMxMjc3LTQuNjY3NTY0LS42MzEyNzd6IiBmaWxsPSIjZDY0MjMwIi8+PGNpcmNsZSBjeD0iMTIyLjQ3NDc1MSIgY3k9IjE2Mi4xMjUxMzciIGZpbGw9IiNhOTM1MmEiIHI9IjcuNDczNjg0Ii8+PC9nPjwvc3ZnPg==">
-                                </div>
-                                <h2>Why do I have to wait?</h2>
-                                <ul>
-                                    <li>Crypto payments need to be confirmed by several computers on the
-                                        network, known as the blockchain.
-                                    </li>
-                                    <li>Payments usually fully confirm within a few minutes. Or up to an hour in
-                                        extreme cases
-                                    </li>
-                                    <li>Don't worry, your <strong>payment will be processed automatically even
-                                        if you close this window</strong>.
-                                    </li>
-                                    <li class="block-explorer-li" style="display: none;">You can track your payment's
-                                        progress with a <a class="P-block-explorer" target="_blank" href="#">block
-                                            explorer
-                                            <svg height="14" viewBox="0 0 14 14" width="14"
-                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <path d="m333.875 38c-.482562 0-.875-.392-.875-.875v-12.25c0-.483.392438-.875.875-.875h5.6875c.241938 0 .4375.1955625.4375.4375v.875c0 .2419375-.195562.4375-.4375.4375h-4.8125v10.5h10.5v-4.8125c0-.2419375.195562-.4375.4375-.4375h.875c.241938 0 .4375.1955625.4375.4375v5.6875c0 .483-.392438.875-.875.875zm12.690554-14c .240249 0 .434446.1933285.434446.4344461v4.3444615c0 .1746474-.10557.3340891-.268053.4005594-.053872.0230256-.11035.0338868-.166393.0338868-.112956 0-.224174-.0443135-.307154-.1272927l-1.557489-1.5579239-4.344027 4.3444615c-.169869.1698684-.444438.1698684-.615176 0l-.614307-.6143069c-.169868-.1698684-.169868-.4444384 0-.6143068l4.344462-4.3444615-1.557924-1.5579239c-.124252-.1246861-.161614-.3114979-.094275-.4735463.066905-.1629173.225912-.2680533.401428-.2680533z"
-                                                      fill="#b9b9b9" transform="translate(-333 -24)"></path>
-                                            </svg>
-                                        </a>
-                                    </li>
-                                    <li>If for any reason your payment fails to confirm, your money will return
-                                        to your wallet automatically.
-                                    </li>
-                                </ul>
-                                <div>
-                                    <button class="P-btn P-btn-grey">
-                                        <i class="P-btn__icon P-btn__icon--back-grey"></i>
-                                        Got it!
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
                         <!-- Payment confirmed step -->
                         <div class="P-Payment__confirmed" style="display: none;">
                             <div class="P-Content">
