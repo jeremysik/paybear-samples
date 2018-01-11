@@ -25,7 +25,8 @@
             var newButton = button.cloneNode(true);
             button.parentNode.replaceChild(newButton, button);
 
-            newButton.addEventListener('click', function () {
+            newButton.addEventListener('click', function (e) {
+                e.preventDefault();
                 paybearInit.call(that);
             })
         } else {
@@ -506,6 +507,19 @@
         paymentStart.style.display = 'none';
         paymentExpired.removeAttribute('style');
 
+        // helper
+        var showPaymentHelper = paymentExpired.querySelector('.P-Payment__helper');
+        var paymentHelper = document.querySelector('.P-Payment__expired-helper');
+        var paymentHelperBtn = document.querySelector('.P-Payment__expired-helper button');
+        showPaymentHelper.addEventListener('click', function () {
+            paymentExpired.style.display = 'none';
+            paymentHelper.removeAttribute('style');
+        });
+        paymentHelperBtn.addEventListener('click', function () {
+            paymentExpired.removeAttribute('style');
+            paymentHelper.style.display = 'none';
+        });
+
         paymentExpired.querySelector('.P-btn').addEventListener('click', function retry(e) {
             e.preventDefault();
 
@@ -545,6 +559,27 @@
             var paymentConfirming = document.querySelector('.P-Payment__confirming');
             paymentStart.style.display = 'none';
             paymentConfirming.removeAttribute('style');
+
+            // helper
+            var showPaymentHelper = paymentConfirming.querySelector('.P-Payment__helper');
+            var paymentHelper = document.querySelector('.P-Payment__confirming-helper');
+            var paymentHelperBtn = document.querySelector('.P-Payment__confirming-helper button');
+            showPaymentHelper.addEventListener('click', function () {
+                var blockExplorer = state.currencies[state.selected].blockExplorer;
+                paymentConfirming.style.display = 'none';
+                paymentHelper.removeAttribute('style');
+                if (paymentHelper.clientHeight > document.querySelector('.P-box__inner').clientHeight) {
+                    paymentHelper.style.overflowY = 'scroll';
+                }
+                if (blockExplorer) {
+                    paymentHelper.querySelector('.block-explorer-li').style.display = 'block';
+                    paymentHelper.querySelector('.P-block-explorer').setAttribute('href', blockExplorer);
+                }
+            });
+            paymentHelperBtn.addEventListener('click', function () {
+                paymentConfirming.removeAttribute('style');
+                paymentHelper.style.display = 'none';
+            });
 
             //header
             that.paymentHeaderTitle.textContent = 'Confirming Payment';
