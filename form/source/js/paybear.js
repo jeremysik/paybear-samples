@@ -543,6 +543,19 @@
         var selectedCoin = state.currencies[state.selected];
 
         if (!isConfirming) {
+            if (options.modal) {
+                that.topBackButton.removeAttribute('style');
+                that.topBackButton.removeEventListener('click', that.handleTopBackButton);
+
+                that.handleTopBackButton = function (event) {
+                    event.preventDefault();
+                    hideModal.call(that);
+                };
+                that.topBackButton.addEventListener('click', that.handleTopBackButton);
+            } else {
+                that.topBackButton.style.display = 'none';
+            }
+
             that.paymentHeader.classList.remove('P-Payment__header--red');
             window.removeEventListener('resize', that.resizeListener, true);
             clearInterval(state.interval);
@@ -588,10 +601,10 @@
                 .innerHTML = 'Payment Detected. Waiting for ' + selectedCoin.confirmations +
                 (selectedCoin.confirmations === 1 ? ' Confirmation' : ' Confirmations');
 
-            if (options.modal || options.onBackClick) {
+            if (options.modal) {
                 paymentConfirming.querySelector('.P-btn').addEventListener('click', function (e) {
                     e.preventDefault();
-                    paybearBack.call(that);
+                    hideModal.call(that);
                 });
             } else {
                 paymentConfirming.querySelector('.P-btn').style.display = 'none';
@@ -641,8 +654,27 @@
                     e.preventDefault();
                     paybearBack.call(that);
                 });
+            }
+        } else {
+            paymentConfirmed.querySelector('p').style.display = 'none';
+            if (options.modal) {
+                var btn = paymentConfirmed.querySelector('.P-btn');
+                var newBtn = document.createElement('button');
+                newBtn.innerHTML = '<i class="P-btn__icon--close"></i> Close';
+                newBtn.classList.value = 'P-btn P-btn--sm';
+                btn.parentNode.replaceChild(newBtn, btn);
+                paymentConfirmed.querySelector('.P-btn').addEventListener('click', function (e) {
+                    e.preventDefault();
+                    hideModal.call(that);
+                });
+                that.topBackButton.removeEventListener('click', that.handleTopBackButton);
+                that.topBackButton.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    hideModal.call(that);
+                });
             } else {
-                that.topBackButton.style.display = 'none'
+                that.topBackButton.style.display = 'none';
+                paymentConfirmed.querySelector('.P-btn').style.display = 'none';
             }
         }
 

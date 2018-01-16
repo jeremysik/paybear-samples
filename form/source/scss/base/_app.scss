@@ -8,7 +8,7 @@
 .PayBear-app {
   font-size: 18px;
   height: 100%;
-  min-height: 500px;
+  min-height: 560px;
   margin: 0 auto;
   overflow: hidden;
 
@@ -182,7 +182,8 @@
       width: 100%;
       @include sh {
         width: auto;
-        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
       }
     }
     svg {
@@ -230,7 +231,10 @@
     font-size: 18px;
     letter-spacing: 0;
     line-height: 1.45;
-    padding: 16px 0;
+    padding: 32px;
+    @include xs {
+      padding: 32px 0;
+    }
     @include md {
       font-size: 22px;
       letter-spacing: 0;
@@ -239,6 +243,9 @@
     strong {
       font-weight: 600;
       color: #494949;
+    }
+    .P-btn {
+      margin-top: 30px;
     }
   }
 }
