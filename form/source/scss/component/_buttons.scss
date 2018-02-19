@@ -159,38 +159,29 @@
   }
 
   .P-btn {
-    height: 50px;
-    line-height: 50px;
-    font-size: 18px;
-    font-weight: 700;
+    height: 55px;
+    line-height: 55px;
+    font-size: 16px;
+    font-weight: 600;
     padding: 0 30px;
     margin-top: 30px;
     background: #396EE0;
-    color: #fff;
+    color: #fff !important;
     text-decoration: none;
     display: inline-block;
     border-radius: 999px;
     cursor: pointer;
     border: 0;
+    min-width: 240px;
+    @media (max-width: 450px) {
+      min-width: 100%;
+    }
+    @include md {
+      font-size: 20px;
+    }
     &[disabled] {
       opacity: 0.7;
       pointer-events: none;
-    }
-    @include xs {
-      height: 42px;
-      line-height: 42px;
-      font-size: 15px;
-      margin-top: 20px;
-    }
-    @include md {
-      height: 54px;
-      line-height: 54px;
-      font-size: 24px;
-      padding: 0 31px;
-      margin-top: 27px;
-    }
-    @include sh2 {
-      margin-top: 10px;
     }
     &__icon {
       display: inline-block;
@@ -199,16 +190,6 @@
       fill: #fff;
       vertical-align: -3px;
       margin-right: 10px;
-
-      @include xs {
-        width: 16px;
-        height: 16px;
-      }
-      @include md {
-        width: 32px;
-        height: 32px;
-        vertical-align: -7px;
-      }
       &--back-grey {
         background: no-repeat center url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIiAgIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyIgICB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgICB4bWxuczpzb2RpcG9kaT0iaHR0cDovL3NvZGlwb2RpLnNvdXJjZWZvcmdlLm5ldC9EVEQvc29kaXBvZGktMC5kdGQiICAgeG1sbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUiICAgaGVpZ2h0PSIyMiIgICB2aWV3Qm94PSIwIDAgMjIgMjIiICAgd2lkdGg9IjIyIiAgIGlkPSJzdmcyIiAgIHZlcnNpb249IjEuMSIgICBpbmtzY2FwZTp2ZXJzaW9uPSIwLjkxIHIxMzcyNSIgICBzb2RpcG9kaTpkb2NuYW1lPSJhcnJvdy1ncmF5LnN2ZyI+ICA8bWV0YWRhdGEgICAgIGlkPSJtZXRhZGF0YTEwIj4gICAgPHJkZjpSREY+ICAgICAgPGNjOldvcmsgICAgICAgICByZGY6YWJvdXQ9IiI+ICAgICAgICA8ZGM6Zm9ybWF0PmltYWdlL3N2Zyt4bWw8L2RjOmZvcm1hdD4gICAgICAgIDxkYzp0eXBlICAgICAgICAgICByZGY6cmVzb3VyY2U9Imh0dHA6Ly9wdXJsLm9yZy9kYy9kY21pdHlwZS9TdGlsbEltYWdlIiAvPiAgICAgICAgPGRjOnRpdGxlPjwvZGM6dGl0bGU+ICAgICAgPC9jYzpXb3JrPiAgICA8L3JkZjpSREY+ICA8L21ldGFkYXRhPiAgPGRlZnMgICAgIGlkPSJkZWZzOCIgLz4gIDxzb2RpcG9kaTpuYW1lZHZpZXcgICAgIHBhZ2Vjb2xvcj0iI2ZmZmZmZiIgICAgIGJvcmRlcmNvbG9yPSIjNjY2NjY2IiAgICAgYm9yZGVyb3BhY2l0eT0iMSIgICAgIG9iamVjdHRvbGVyYW5jZT0iMTAiICAgICBncmlkdG9sZXJhbmNlPSIxMCIgICAgIGd1aWRldG9sZXJhbmNlPSIxMCIgICAgIGlua3NjYXBlOnBhZ2VvcGFjaXR5PSIwIiAgICAgaW5rc2NhcGU6cGFnZXNoYWRvdz0iMiIgICAgIGlua3NjYXBlOndpbmRvdy13aWR0aD0iMTQ0MCIgICAgIGlua3NjYXBlOndpbmRvdy1oZWlnaHQ9Ijc4MSIgICAgIGlkPSJuYW1lZHZpZXc2IiAgICAgc2hvd2dyaWQ9ImZhbHNlIiAgICAgaW5rc2NhcGU6em9vbT0iMTAuNzI3MjczIiAgICAgaW5rc2NhcGU6Y3g9Ii0xLjM5ODMwNTEiICAgICBpbmtzY2FwZTpjeT0iMTEiICAgICBpbmtzY2FwZTp3aW5kb3cteD0iMCIgICAgIGlua3NjYXBlOndpbmRvdy15PSIxIiAgICAgaW5rc2NhcGU6d2luZG93LW1heGltaXplZD0iMSIgICAgIGlua3NjYXBlOmN1cnJlbnQtbGF5ZXI9InN2ZzIiIC8+ICA8cGF0aCAgICAgZD0ibSA2LjM5NDY0NSw4Ljg1NDI2MDkgMTMuNzYxNjg0LDAgYyAxLjAxODIzMSwwIDEuODQzNjcxLDAuODIzNDQgMS44NDM2NzEsMS44MzkyMDUxIDAsMS4wMTU3NjQgLTAuODI1NDQsMS44MzkyMDUgLTEuODQzNjcxLDEuODM5MjA1IGwgLTE0LjM3NjI0MSwwIDIuNDgzNjI4LDIuNDc3NjEgYyAwLjcxOTk5OCwwLjcxODI1NCAwLjcxOTk5OCwxLjg4Mjc3NCAwLDIuNjAxMDI4IC0wLjcxOTk5OSwwLjcxODI1NSAtMS44ODczNDcsMC43MTgyNTUgLTIuNjA3MzQ1LDAgTCAwLjUzOTk5OCwxMi41MDczMzMgQyAwLjEyNzE4MywxMi4wOTU1MTcgLTAuMDQ4OTQxLDExLjUzNjk5NyAwLjAxMTYyMywxMSAtMC4wNDg5MzcsMTAuNDYzMDAzIDAuMTI3MTgzLDkuOTA0NDgyOSAwLjUzOTk5OCw5LjQ5MjY2NjkgTCA1LjY1NjM3MSw0LjM4ODY5MDMgYyAwLjcxOTk5OCwtMC43MTgyNTQgMS44ODczNDYsLTAuNzE4MjU0IDIuNjA3MzQ1LDAgMC43MTk5OTgsMC43MTgyNTUgMC43MTk5OTgsMS44ODI3NzM2IDAsMi42MDEwMjg2IHoiICAgICBpZD0icGF0aDQiICAgICBpbmtzY2FwZTpjb25uZWN0b3ItY3VydmF0dXJlPSIwIiAgICAgc3R5bGU9ImZpbGw6I2M5YzljOSIgLz48L3N2Zz4=');
         background-size: contain;
@@ -233,7 +214,7 @@
     }
     &-grey {
       background: #F5F5F5;
-      color: #A0A0A0;
+      color: #A0A0A0 !important;
       font-weight: 400;
       svg {
         fill: #c9c9c9;
@@ -245,7 +226,7 @@
       line-height: 36px;
       border: 0;
       box-shadow: inset 0 0 0 2px #E3E3E3;
-      color: #B2B2B2;
+      color: #B2B2B2 !important;
       min-width: 0;
       font-size: 18px;
       font-weight: 400;

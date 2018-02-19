@@ -104,6 +104,17 @@
         color: $green;
       }
     }
+
+    &--yellow {
+      background: rgba(#deb346, 0.1);
+      color: #8e9594;
+      .P-Payment__header__timer {
+        background: #deb346;
+      }
+      .P-Payment__header__title {
+        color: #deb346;
+      }
+    }
     &__check {
       background: $green no-repeat center url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjNweCIgaGVpZ2h0PSIxOHB4IiB2aWV3Qm94PSIwIDAgMjMgMTgiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+ICAgIDxwYXRoIGQ9Ik03LjA0OTEwNjczLDEyLjg0OTM3NzEgTDMuOTUzNzAwMDcsOS43NTM5NzA0MSBMMy45NTM3MDAwNyw5Ljc1Mzk3MDQxIEMzLjA2NTA0MTI3LDguODY1MzExNjEgMS42MjQyNDA2OSw4Ljg2NTMxMTYxIDAuNzM1NTgxODk4LDkuNzUzOTcwNDEgTDAuNzM1NTgxODk4LDkuNzUzOTcwNDEgTDAuNzM1NTgxODk4LDkuNzUzOTcwNDEgQy0wLjE1MzA3Njg5NiwxMC42NDI2MjkyIC0wLjE1MzA3Njg5NiwxMi4wODM0Mjk4IDAuNzM1NTgxODk4LDEyLjk3MjA4ODYgTDQuNDUyMjIzOCwxNi42ODg3MzA1IEM0LjUxMjUzOTgsMTcuMTczNzI1NSA0LjcyODg3NTA2LDE3LjY0MzAxNzkgNS4xMDEyMjk1NywxOC4wMTUzNzI0IEM1Ljk4OTg4ODM2LDE4LjkwNDAzMTIgNy40MzA2ODg5NCwxOC45MDQwMzEyIDguMzE5MzQ3NzQsMTguMDE1MzcyNCBMMjEuMzM3NTg4OCw0Ljk5NzEzMTMxIEMyMi4yMjYyNDc2LDQuMTA4NDcyNTEgMjIuMjI2MjQ3NiwyLjY2NzY3MTkzIDIxLjMzNzU4ODgsMS43NzkwMTMxNCBMMjEuMzM3NTg4OCwxLjc3OTAxMzE0IEwyMS4zMzc1ODg4LDEuNzc5MDEzMTQgQzIwLjQ0ODkzLDAuODkwMzU0MzQxIDE5LjAwODEyOTUsMC44OTAzNTQzNDEgMTguMTE5NDcwNywxLjc3OTAxMzE0IEwxOC4xMTk0NzA3LDEuNzc5MDEzMTQgTDcuMDQ5MTA2NzMsMTIuODQ5Mzc3MSBaIiBmaWxsPSIjRkZGRkZGIj48L3BhdGg+PC9zdmc+');
       background-size: 50%;
@@ -118,6 +129,9 @@
         width: 32px;
         height: 32px;
       }
+      &--yellow {
+        background-color: #deb346;
+      }
     }
   }
   &__start, &__expired, &__expired-helper, &__confirmed {
@@ -129,6 +143,10 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+
+    .P-Payment__helper {
+      flex-shrink: 0;
+    }
     @include sh {
       .P-Payment .P-btn {
         margin-top: 20px;
@@ -140,6 +158,45 @@
     @include sh2 {
       p {
         margin-bottom: 0;
+      }
+    }
+    &-helper {
+      .P-Content {
+        padding: 0;
+        font-size: 14px;
+        @include md {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+  &__unpaid {
+    .P-Content__icon {
+      margin-top: 20px;
+    }
+    .P-btn {
+      margin-top: 50px;
+    }
+  }
+  &__confirmed {
+    .P-Content__icon {
+      margin-top: 20px;
+    }
+    .P-btn {
+      margin-top: 50px;
+    }
+    &__title {
+      font-weight: 700;
+      line-height: 1.1;
+      color: #3db39e;
+      font-size: 24px;
+      margin: 0 0 20px;
+      @include md {
+        font-size: 32px;
+        margin: 10px 0 30px;
+      }
+      &--overpaid {
+        color: #DEB346;
       }
     }
   }

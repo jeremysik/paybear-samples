@@ -34,7 +34,7 @@
     > * {
       pointer-events: all;
     }
-    @media (max-height: 500px) {
+    @media (max-height: 600px) {
       bottom: 0;
       pointer-events: all;
       overflow-y: scroll;
@@ -65,37 +65,12 @@
   }
   .PayBear-container {
     pointer-events: all;
-    @media (max-height: 510px) {
-      padding: 0 20px 20px;
+    @media (max-height: 699px) {
+      padding: 0 30px 30px;
     }
     @include md {
       height: auto;
       width: 100%;
-    }
-  }
-  .PayBear__Nav {
-    @media (max-height: 510px) {
-      padding: 20px 0 18px;
-    }
-  }
-  .Payment__value {
-    @media (max-height: 510px) {
-      padding: 12px 0 24px;
-    }
-  }
-  .P-Tabs__Tab {
-    @media (max-height: 510px) {
-      padding: 8px 15px;
-    }
-  }
-  .P-box__inner {
-    @media (max-height: 510px) {
-      padding: 10px 20px 20px;
-    }
-  }
-  .P-Content h2 {
-    @media (max-width: 400px) {
-      padding: 0;
     }
   }
 }
@@ -108,7 +83,7 @@
     left: 0;
     top: 0;
   }
-  @media (max-height: 500px) {
+  @media (max-height: 600px) {
     position: fixed;
     height: 100vh;
     width: 100%;
