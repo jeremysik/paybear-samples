@@ -181,31 +181,6 @@
         fill: $light-grey;
       }
     }
-    &__price {
-      color: rgba(#525252, 0.5);
-      font-size: 12px;
-      letter-spacing: -0.47px;
-      font-weight: 500;
-      @include md {
-        font-size: 16px;
-      }
-      @include sh2 {
-        font-size: 11px;
-      }
-      span {
-        font-size: 24px;
-        vertical-align: -3px;
-        letter-spacing: -0.25px;
-        font-weight: 600;
-        margin-right: 3px;
-        margin-left: 1px;
-        @include md {
-          font-size: 30px;
-          letter-spacing: 0.75px;
-          margin-right: 5px;
-        }
-      }
-    }
   }
   &__Icons {
     display: flex;
