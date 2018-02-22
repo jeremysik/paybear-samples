@@ -3,7 +3,7 @@ const gulp           = require('gulp');
 const sass           = require('gulp-sass');
 const cssnano        = require('gulp-cssnano');
 const autoprefixer   = require('gulp-autoprefixer');
-const browserSync    = require('browser-sync');
+const browserSync    = require('browser-sync').create();
 const sourcemaps     = require('gulp-sourcemaps');
 const removeCode     = require('gulp-remove-code');
 const rename         = require('gulp-rename');
@@ -31,33 +31,39 @@ gulp.task('sass', function () {
         .pipe(development(sourcemaps.write()))
         .pipe(rename('paybear.css'))
         .pipe(gulp.dest(config.dist))
-        .pipe(browserSync.reload({ stream: true }));
+        .pipe(browserSync.stream());
 });
 
 gulp.task('scripts', function() {
     return gulp.src(config.src + 'js/*.js')
         .pipe(gulp.dest(config.dist))
-        .pipe(browserSync.reload({ stream: true }));
+        .pipe(browserSync.stream());
 });
 
 gulp.task('html', function() {
     return gulp.src(config.src + 'index.html')
         .pipe(removeCode({ production: production() }))
+        .pipe(production(rename('paybear.html')))
         .pipe(gulp.dest(config.dist));
+});
+
+gulp.task('html-watch', ['html'], function (done) {
+    browserSync.reload();
+    done();
 });
 
 gulp.task('browser-sync', function() {
     browserSync.init({
         server: {
             baseDir: config.dist,
-        }
+        },
     });
 });
 
-gulp.task('default', ['browser-sync','html', 'sass', 'scripts'], function () {
+gulp.task('default', ['browser-sync', 'sass', 'scripts', 'html-watch'], function () {
     gulp.watch(config.sassPattern, ['sass']);
     gulp.watch(config.src + 'js/*.js', ['scripts']);
-    gulp.watch(config.src + '*.html').on('change', browserSync.reload);
+    gulp.watch(config.src + 'index.html', ['html-watch']);
 });
 
 gulp.task('build', ['sass', 'scripts', 'html']);
