@@ -436,9 +436,14 @@
       "redirectTimeout": 0,
       //fiatSign: '',
       //fiatCurrency: 'USD'
-      //"onBackClick": function () { // url or function  // optional
-      //    console.log('handle this');
-      //}
+//      "onBackClick": function () { // url or function  // optional
+//          console.log('handle this');
+//      },
+      "unloadHandler": function (e) {
+          var confirmationMessage = "\o/";
+          e.returnValue = confirmationMessage;
+          return confirmationMessage;
+      }
     };
     window.paybear = new Paybear(optionsNew);
   });
