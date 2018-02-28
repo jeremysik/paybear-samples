@@ -57,20 +57,124 @@
       transform: rotate(45deg);
     }
   }
+
+  #paybear {
+    @media (max-width: 640px) {
+      height: 100%;
+    }
+  }
+  .PayBear {
+    height: 100%;
+    &__Item {
+      @include sh {
+        padding: 12px;
+      }
+      &__code {
+        @include sh {
+          margin-top: 12px;
+        }
+      }
+    }
+    &__Nav {
+      @include sh2 {
+        font-size: 12px;
+      }
+      &__arrow {
+        @include sh2 {
+          width: 22px;
+          height: 22px;
+        }
+      }
+    }
+    .PayBear__Nav__arrow, .PayBear__brand-link {
+      margin: 4px 0 18px;
+      @include sh {
+        margin: -8px 0 18px;
+      }
+    }
+  }
   .PayBear-app {
+    height: 100%;
+    min-height: 560px;
+    margin: 0 auto;
+    @media (max-width: 640px) {
+      height: 100%;
+    }
+    @media (min-width: 641px) {
+      height: auto;
+    }
     @include md {
       max-height: 98vh;
       display: flex;
     }
-  }
-  .PayBear-container {
-    pointer-events: all;
-    @media (max-height: 699px) {
-      padding: 0 30px 30px;
+    .PayBear-container {
+      pointer-events: all;
+      margin: 0 auto;
+      height: 100%;
+      min-height: 600px;
+      .PayBear {
+        flex-grow: 1;
+      }
+      @include xl {
+        max-width: 800px;
+      }
+      @include md {
+        height: auto;
+        width: 100%;
+      }
+      @include xl {
+        max-width: 800px;
+      }
+      @include sh {
+        max-width: 600px;
+      }
+      @include sh2 {
+        max-width: 540px;
+      }
     }
-    @include md {
-      height: auto;
-      width: 100%;
+  }
+  .P-box {
+    height: 100%;
+    &__inner {
+      padding: 20px 20px 30px;
+      @include md {
+        padding: 20px 20px 40px;
+      }
+    }
+  }
+  .P-Content {
+    @include sh {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    &__icon {
+      @include sh {
+        width: 200px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-grow: 1;
+      }
+      @include sh2 {
+        padding: 16px;
+      }
+      img {
+        @include sh {
+          width: auto;
+          max-width: 100%;
+          max-height: 100%;
+        }
+      }
+    }
+  }
+  .Confirming__icon {
+    @include sh {
+      svg {
+        height: 100%;
+        max-width: none;
+      }
     }
   }
 }

@@ -4,12 +4,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    @include sh {
-      svg {
-        height: 100%;
-        max-width: none;
-      }
-    }
     &--small {
       .Confirming__pic__point--top {
         display: none;

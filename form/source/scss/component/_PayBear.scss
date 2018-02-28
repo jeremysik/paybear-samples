@@ -1,5 +1,4 @@
 .PayBear {
-  height: 100%;
   display: flex;
   flex-direction: column;
   &__Item {
@@ -28,9 +27,6 @@
       margin-right: 16px;
       padding: 20px;
       font-size: 17px;
-    }
-    @include sh {
-      padding: 12px;
     }
     &--last {
       box-shadow: inset 0 0 0 2px #F0F0F0;
@@ -77,9 +73,6 @@
         font-size: 18px;
         margin-top: 22px;
       }
-      @include sh {
-        margin-top: 12px;
-      }
     }
     &__val {
       font-size: 12px;
@@ -125,25 +118,14 @@
     color: #BDBDBD;
     font-size: 13px;
     letter-spacing: 0.22px;
-    padding: 24px 0 18px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     flex-shrink: 0;
     @include xs {
       font-size: 10px;
-      padding: 20px 0 18px;
     }
     @include md {
       font-size: 16px;
-      padding: 32px 0 30px;
-    }
-    @include sh2 {
-      font-size: 12px;
-    }
-    > div {
-      display: flex;
-      align-items: center;
     }
     &__external {
       margin: 0 3px -3px 9px;
@@ -170,16 +152,30 @@
         height: 28px;
         margin-right: 10px;
       }
-      @include sh2 {
-        width: 22px;
-        height: 22px;
-      }
       svg {
         width: 100%;
         height: 100%;
         transform: rotate(180deg);
         fill: $light-grey;
       }
+    }
+  }
+  &__brand-link {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1;
+  }
+  .PayBear__Nav__arrow, .PayBear__brand-link {
+    margin: 4px 0 18px;
+    @include xs {
+      margin: 0 0 18px;
+    }
+    @include sm {
+      margin-top: -6px;
+    }
+    @include md {
+      margin: -8px 0 30px;
     }
   }
   &__Icons {
