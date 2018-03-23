@@ -31,9 +31,6 @@
     .PayBear {
       flex-grow: 1;
     }
-    @media (max-width: 640px) {
-      border-radius: 0;
-    }
     @include sm {
       padding: 30px;
     }
